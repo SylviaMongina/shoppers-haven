@@ -1,19 +1,18 @@
 import "./SignUp.css"
-import shopperlogo from "../../assets/shopperlogo.jpeg"
+import shopperlogo from "../../assets/images/shoppers-haven-logo.png"
 export default function SignUp() {
   return (
-    <div className="mx-auto">
-    
-      <div className="flex min-h-full items-center justify-center">
-        <div className="flex flex-1 flex-col items-center justify-center drop-shadow-lg py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
+    <div className="mt-5 shadow">
+      <div className="flex min-h-full items-center justify-center ">
+        <div className="flex flex-1 flex-col sign-up-card shadow items-center justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
           <div className="mx-auto w-full max-w-sm lg:w-96">
             <div>
               <img
-                className="h-12 w-auto"
+                className="logo w-auto"
                 src={shopperlogo}
                 alt="Your Company"
               />
-              <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900">Create your account</h2>
+              <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900 text-center">Create your account</h2>
               
             </div>
             <div className="mt-8">

@@ -1,27 +1,20 @@
 import "./Login.css"
-import shopperlogo from "../../assets/shopperlogo.jpeg"
+import shopperlogo from "../../assets/images/shoppers-haven-logo.png"
 import { Link } from "react-router-dom"
 export default function Login() {
   return (
     <>
-  
-      <div className="flex min-h-full">
-        <div className="flex flex-1 flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
+      <div className="flex min-h-full items-center justify-center mt-20">
+        <div className="flex flex-1 login-card shadow flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
           <div className="mx-auto w-full max-w-sm lg:w-96">
             <div>
               <img
-                className="h-12 w-auto"
+                className="logo w-auto"
                 src={shopperlogo}
                 alt="Shoppers Haven"
               />
-              <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900">WELCOME BACK!</h2>
-              <h2 className="mt-6 text-lg  tracking-tight text-gray-900">Sign in to your account</h2>
-              {/* <p className="mt-2 text-sm text-gray-600">
-                Or{' '}
-                <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
-                  start your 14-day free trial
-                </a>
-              </p> */}
+              <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900 text-center">WELCOME BACK!</h2>
+              <h2 className="mt-6 text-lg  tracking-tight text-gray-900 text-center">Sign in to your account</h2>
             </div>
             <div className="mt-8">
               {/* <div>
@@ -81,7 +74,7 @@ export default function Login() {
                 </div>
               </div> */}
               <div className="mt-6">
-                <form action="#" method="POST" className="space-y-6">
+                <form  className="space-y-6">
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                       Email address
@@ -125,8 +118,7 @@ export default function Login() {
                       </label>
                     </div>
                     <div className="text-sm">
-                    {/* <Link to={"/SignUp"}>  Don't have an account?</Link> */}
-                    
+                    <Link to={"/signup"}>  Don't have an account?</Link>
                     </div>
                   </div>
                   <div>

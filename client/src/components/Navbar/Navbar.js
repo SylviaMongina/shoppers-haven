@@ -4,12 +4,12 @@ import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 
-function Navbar() {
-    const [current, setCurrent] = useState(false)
+export default function Navbar() {
+    const [current] = useState(false)
 
     const navigation = [
-    { name: 'Home', href: 'l', current: true }, 
-    { name: 'About', href: 'jn', current: false },
+    { name: 'Home', href: '/', current: true }, 
+    { name: 'About', href: '/about', current: false },
     ]
 
     function classNames(...classes) {
@@ -163,45 +163,3 @@ function Navbar() {
     </div>
   )
 }
-
-export default Navbar
-
-import React from 'react';
-
-function Navbar() {
-  return (
-    <nav>
-      <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Login</a></li>
-        <li><a href="#">Sign Up</a></li>
-      </ul>
-    </nav>
-  );
-}
-
-export default Navbar;
-// import React from 'react';
-// import { useHistory } from 'react-router-dom';
-
-// function Navbar() {
-//   const history = useHistory();
-
-//   const handleLoginClick = () => {
-//     history.push('/login');
-//   };
-
-//   return (
-//     <nav>
-//       <ul>
-//         <li><a href="/">Home</a></li>
-//         <li><a href="/about">About</a></li>
-//         <li><a onClick={handleLoginClick}>Login</a></li>
-//         <li><a href="/signup">Sign Up</a></li>
-//       </ul>
-//     </nav>
-//   );
-// }
-
-// export default Navbar;

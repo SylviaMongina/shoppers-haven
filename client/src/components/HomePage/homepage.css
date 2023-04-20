@@ -6,6 +6,7 @@
     width: auto;
     position: relative;
     isolation: isolate;
+    object-fit: cover;
 }
 
 .header-div::after {
@@ -27,7 +28,7 @@
     }
 
     .what-we-do {
-        width: 60%;
+        width: 70%;
     }
 
     .right-rectangle {
