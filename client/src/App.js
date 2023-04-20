@@ -1,16 +1,20 @@
-import logo from './logo.svg';
 import './App.css';
+import Footer from './components/Footer/Footer';
+import HomePage from './components/HomePage/HomePage';
+import Navbar from './components/Navbar/Navbar';
 import About from './components/About/About';
 import Login from './components/Login/Login';
 import Signup from './components/SignUp/SignUp';
-import Navbar from './components/Navbar/Navbar';
+
 function App() {
   return (
-    <div className="App">
-
-   <Login/>
-   <Signup/>
-   <About/>
+    <div className='body'>
+      <Navbar />
+      <HomePage />
+     <Login/>
+     <Signup/>
+     <About/>
+      <Footer />
     </div>
   );
 }
