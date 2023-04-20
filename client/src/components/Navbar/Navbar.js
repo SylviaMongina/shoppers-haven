@@ -4,16 +4,23 @@ import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 
-function Navbar() {
-    const [current, setCurrent] = useState(false)
+export default function Navbar() {
+    const [current] = useState(false)
 
     const navigation = [
-    { name: 'Home', href: 'l', current: true }, 
-    { name: 'About', href: 'jn', current: false },
+    { name: 'Home', href: '/', current: true }, 
+    { name: 'About', href: '/about', current: false },
     ]
 
     function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
+    }
+
+    function handleSignOut() {
+        fetch('/logout', {
+            method: 'DELETE',
+        })
+        .then(res => {res.json(); console.log(res)})
     }
 
 
@@ -70,7 +77,7 @@ function Navbar() {
                         <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
 
                             <Menu as="div" className="relative ml-3">
-                            {/* <div>
+                            <div>
                                 <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                                 <span className="sr-only">Open user menu</span>
                                 <img
@@ -79,8 +86,8 @@ function Navbar() {
                                     alt=""
                                 />
                                 </Menu.Button>
-                            </div> */}
-                            <Disclosure.Button
+                            </div>
+                            {/* <Disclosure.Button
                                 as="a"
                                 style = {{textDecoration: "none"}}
                                 href='/login'
@@ -91,7 +98,7 @@ function Navbar() {
                                 aria-current={current ? 'page' : undefined}
                                 >
                                 Login
-                            </Disclosure.Button>
+                            </Disclosure.Button> */}
                             <Transition
                                 as={Fragment}
                                 enter="transition ease-out duration-100"
@@ -106,7 +113,7 @@ function Navbar() {
                                     {({ active }) => (
                                     <a
                                         href="hf#"
-                                        className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                                        className={`${classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')} no-underline`}
                                     >
                                         Your Profile
                                     </a>
@@ -116,7 +123,7 @@ function Navbar() {
                                     {({ active }) => (
                                     <a
                                         href="ln#"
-                                        className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                                        className={`${classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')} no-underline`}
                                     >
                                         Settings
                                     </a>
@@ -126,7 +133,8 @@ function Navbar() {
                                     {({ active }) => (
                                     <a
                                         href="#ln"
-                                        className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                                        className={`${classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')} no-underline`}
+                                        onClick={(e) => handleSignOut()}
                                     >
                                         Sign out
                                     </a>
@@ -163,45 +171,3 @@ function Navbar() {
     </div>
   )
 }
-
-export default Navbar
-
-import React from 'react';
-
-function Navbar() {
-  return (
-    <nav>
-      <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Login</a></li>
-        <li><a href="#">Sign Up</a></li>
-      </ul>
-    </nav>
-  );
-}
-
-export default Navbar;
-// import React from 'react';
-// import { useHistory } from 'react-router-dom';
-
-// function Navbar() {
-//   const history = useHistory();
-
-//   const handleLoginClick = () => {
-//     history.push('/login');
-//   };
-
-//   return (
-//     <nav>
-//       <ul>
-//         <li><a href="/">Home</a></li>
-//         <li><a href="/about">About</a></li>
-//         <li><a onClick={handleLoginClick}>Login</a></li>
-//         <li><a href="/signup">Sign Up</a></li>
-//       </ul>
-//     </nav>
-//   );
-// }
-
-// export default Navbar;

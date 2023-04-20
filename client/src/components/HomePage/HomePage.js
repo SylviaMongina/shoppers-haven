@@ -37,7 +37,7 @@ function Home() {
         <p className='text-2xl'>
           It provides a comparison of prices and other relevant information.Shopper’s Haven also computes the marginal benefit and cost benefit analysis of purchasing products from different e-commerce sites and gives you the best products ranked accordingly.
         </p>
-        <a href='/we' className='rounded drop-shadow-lg py-2 px-5 text-white button no-underline'>Learn More</a>
+        <a href='/about' className='rounded drop-shadow-lg py-2 px-5 text-white button no-underline'>Learn More</a>
       </div>
     </>
   )
