@@ -34,7 +34,7 @@ export default function Login() {
           <div className="mx-auto w-full max-w-sm lg:w-96">
             <div>
               <img
-                className="logo w-auto"
+                className="logo w-auto shadow rounded-full mb-3"
                 src={shopperlogo}
                 alt="Shoppers Haven"
               />
