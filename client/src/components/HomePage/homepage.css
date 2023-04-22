@@ -19,7 +19,7 @@
 
 @media (width <= 800px) {
     .header {
-        font-size: 4.5rem;
+        font-size: 4.3rem;
         margin-bottom: 2rem;
     }
 
@@ -60,4 +60,11 @@
 
 .button {
     background-color: #14B8A6;
+}
+
+.search-button {
+    aspect-ratio: 1/1;
+    width: 40px;
+    background-color: #14B8A6;
+    border-radius: 50%;
 }
