@@ -4,6 +4,7 @@ import { Link } from "react-router-dom"
 import { useState, useContext } from "react"
 import { AuthContext } from "../../context/AuthContext"
 
+
 export default function Login() {
   const [formData, setFormData] = useState({})
   const {login} = useContext(AuthContext)
@@ -27,7 +28,7 @@ export default function Login() {
           <div className="mx-auto w-full max-w-sm lg:w-96">
             <div>
               <img
-                className="logo w-auto"
+                className="logo w-auto shadow rounded-full mb-3"
                 src={shopperlogo}
                 alt="Shoppers Haven"
               />
@@ -35,13 +36,13 @@ export default function Login() {
               <h2 className="mt-6 text-lg  tracking-tight text-gray-900 text-center">Sign in to your account</h2>
             </div>
             <div className="mt-8">
-              {/* <div>
+              <div>
                 <div>
                   <p className="text-sm font-medium text-gray-700">Sign in with</p>
                   <div className="mt-1 grid grid-cols-3 gap-3">
                     <div>
                       <a
-                        href="#"
+                        href="/p"
                         className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
                       >
                         <span className="sr-only">Sign in with Facebook</span>
@@ -56,7 +57,7 @@ export default function Login() {
                     </div>
                     <div>
                       <a
-                        href="#"
+                        href="/ook"
                         className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
                       >
                         <span className="sr-only">Sign in with Twitter</span>
@@ -67,7 +68,7 @@ export default function Login() {
                     </div>
                     <div>
                       <a
-                        href="#"
+                        href="/lop"
                         className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
                       >
                         <span className="sr-only">Sign in with GitHub</span>
@@ -90,7 +91,7 @@ export default function Login() {
                     <span className="bg-white px-2 text-gray-500">Or continue with</span>
                   </div>
                 </div>
-              </div> */}
+              </div>
               <div className="mt-6">
                 <form  className="space-y-6" onSubmit={(e) => handleSubmit(e)}>
                   <div>
@@ -126,7 +127,7 @@ export default function Login() {
                     </div>
                   </div>
                   <div className="flex items-center justify-between">
-                    {/* <div className="flex items-center">
+                    <div className="flex items-center">
                       <input
                         id="remember-me"
                         name="remember-me"
@@ -136,7 +137,7 @@ export default function Login() {
                       <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
                         Remember me
                       </label>
-                    </div> */}
+                    </div>
                     <div className="text-sm">
                     <Link className="no-underline text-indigo-700" to={"/signup"}>  Don't have an account?</Link>
                     </div>

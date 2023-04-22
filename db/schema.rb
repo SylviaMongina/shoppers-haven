@@ -31,6 +31,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_20_132659) do
     t.bigint "ecommerce_website_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "image_url"
     t.index ["ecommerce_website_id"], name: "index_products_on_ecommerce_website_id"
   end
 
