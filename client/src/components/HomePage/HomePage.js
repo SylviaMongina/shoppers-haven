@@ -1,18 +1,25 @@
 import React from 'react'
 import './homepage.css'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
+import { useNavigate } from 'react-router-dom'
 
 
 function Home() {
+  const navigate = useNavigate()
+
+  function handleSearch() {
+    navigate('/search')
+  }
+
   return (
     <>
       <div className='header-div flex flex-column justify-center items-center py-44'>
         <h1 className='text-8xl z-10 header text-center'>SHOPPERS HAVEN</h1>
-        <div className="p-3 rounded-lg w-5/12 bg-white z-10 search-div">
+        <div className="p-3 rounded-lg w-5/12 bg-white z-10 search-div flex ">
           <label htmlFor="search" className="sr-only">
             Search
           </label>
-          <div className="relative ">
+          <div className="relative flex-1">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
               <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
             </div>
@@ -23,6 +30,9 @@ function Home() {
               placeholder="Search"
               type="search"
             />
+          </div>
+          <div>
+          <MagnifyingGlassIcon onClick={() => handleSearch()} className="p-2 ml-5 text-white search-button cursor-pointer" aria-hidden="true" />
           </div>
         </div>
       </div>
