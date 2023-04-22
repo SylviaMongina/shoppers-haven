@@ -1,9 +1,12 @@
 import "./Login.css"
 import shopperlogo from "../../assets/images/shoppers-haven-logo.png"
 import { Link } from "react-router-dom"
-import { useState } from "react"
+import { useState, useContext } from "react"
+import { AuthContext } from "../../context/AuthContext"
+
 export default function Login() {
   const [formData, setFormData] = useState({})
+  const {login} = useContext(AuthContext)
 
   function handleChange(e) {
     setFormData({
@@ -14,16 +17,7 @@ export default function Login() {
 
   function handleSubmit(e){
     e.preventDefault()
-    fetch('/login',{
-      method: 'POST',
-      headers: {
-        "Accept": 'application/json',
-        "Content-Type": 'application/json'
-      },
-      body: JSON.stringify(formData)
-    })
-    .then(res => res.json())
-    .then(data => console.log(data))    
+       login(formData) 
   }
 
   return (

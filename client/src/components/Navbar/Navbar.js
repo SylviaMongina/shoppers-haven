@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import logo from '/home/denno/projects/shoppers-haven/client/src/assets/images/shoppers-haven-logo.png'
+import logo from '../../assets/images/shoppers-haven-logo.png'
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
@@ -87,7 +87,7 @@ export default function Navbar() {
                                 />
                                 </Menu.Button>
                             </div>
-                            {/* <Disclosure.Button
+                            <Disclosure.Button
                                 as="a"
                                 style = {{textDecoration: "none"}}
                                 href='/login'
@@ -98,7 +98,7 @@ export default function Navbar() {
                                 aria-current={current ? 'page' : undefined}
                                 >
                                 Login
-                            </Disclosure.Button> */}
+                            </Disclosure.Button>
                             <Transition
                                 as={Fragment}
                                 enter="transition ease-out duration-100"
