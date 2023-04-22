@@ -1,12 +1,12 @@
 class UsersController < ApplicationController
-  skip_before_action :authorized, only: [:create]
+  skip_before_action :authorized, only: [:signup]
   rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
 
   def me
-    render json: { user: current_user }, status: :accepted
+    render json: {user: @user}
   end
 
- def create
+ def signup
   @user = User.create!(user_params)
   @token = encode_token({ user_id: @user.id })
   render json: { user: @user, jwt: @token }, status: :created

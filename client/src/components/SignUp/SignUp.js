@@ -1,9 +1,14 @@
 import "./SignUp.css"
 import { useState } from 'react'
 import shopperlogo from "../../assets/images/shoppers-haven-logo.png"
+import { useContext } from "react"
+import { AuthContext } from "../../context/AuthContext"
 import { Link } from "react-router-dom"
+
+
 export default function SignUp() {
   const [formData, setFormData] = useState({})
+  const { signup } = useContext(AuthContext)
 
   function handleChange(e) {
     setFormData({
@@ -14,17 +19,7 @@ export default function SignUp() {
 
   function handleSubmit(e) {
     e.preventDefault()
-    fetch('/signup',{
-      method: 'POST',
-      headers: {
-        "Accept": 'application/json',
-        "Content-Type": 'application/json'
-      },
-      body: JSON.stringify(formData)
-    })
-    .catch(err => console.log(err))
-    .then(res => res.json())
-    .then(data => console.log(data))
+    signup(formData)
   }
 
   return (
