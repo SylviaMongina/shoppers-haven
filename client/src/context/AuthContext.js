@@ -47,7 +47,7 @@ function AuthProvider({children}){
                 Swal.fire({
                     icon: 'error',
                     title: 'Login Failed',
-                    text: 'Invalid Username or Password!',
+                    text: 'Invalid Email or Password!',
                   })
             }
           })
@@ -70,8 +70,9 @@ function AuthProvider({children}){
                 Swal.fire({
                     icon: 'error',
                     title: 'Wrong credentials!',
-                    text: data.errors,
+                    text: data.errors[0],
                   })
+                  console.log(data.errors)
             }else if(data.user){
                 Swal.fire({
                     position: 'center',
