@@ -41,7 +41,7 @@ function AuthProvider({children}){
                     showConfirmButton: false,
                     timer: 1500
                   })
-                  setChange(!change)
+                  setChange(change)
                   navigate('/')
             }else {
                 Swal.fire({
@@ -80,7 +80,7 @@ function AuthProvider({children}){
                     showConfirmButton: false,
                     timer: 1500
                   })
-                  setChange(!change)
+                  // setChange(!change)
                   navigate('/login')
             }else {
                 Swal.fire({
@@ -117,6 +117,8 @@ function AuthProvider({children}){
         login,
         signup,
         user,
+        change,
+        setChange
 
       }
 
