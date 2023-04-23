@@ -37,7 +37,7 @@ function AuthProvider({children}){
                 Swal.fire({
                     position: 'center',
                     icon: 'success',
-                    title: 'loggedIn Successful',
+                    title: 'Logged In Successfully',
                     showConfirmButton: false,
                     timer: 1500
                   })
@@ -46,8 +46,8 @@ function AuthProvider({children}){
             }else {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Oops...',
-                    text: 'Something went wrong!',
+                    title: 'Login Failed',
+                    text: 'Invalid Username or Password!',
                   })
             }
           })
@@ -69,7 +69,7 @@ function AuthProvider({children}){
             if (data.errors){
                 Swal.fire({
                     icon: 'error',
-                    title: 'Oops...',
+                    title: 'Wrong credentials!',
                     text: data.errors,
                   })
             }else if(data.user){
