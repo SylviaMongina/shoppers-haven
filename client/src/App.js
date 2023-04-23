@@ -7,7 +7,7 @@ import Login from './components/Login/Login';
 import Signup from './components/SignUp/SignUp';
 import PageNotFound from './components/PageNotFound';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { AuthContext } from './context/AuthContext';
+import {  AuthProvider } from './context/AuthContext';
 import SearchPage from './components/Search/SearchPage';
 
 
@@ -16,7 +16,7 @@ function App() {
   return (
     <div className='body'>
       <BrowserRouter>
-        <AuthContext>
+        <AuthProvider>
           <Navbar/>
             <Routes>
               <Route element={<HomePage/>} index path='/' />
@@ -27,7 +27,7 @@ function App() {
               <Route element={<PageNotFound/>} path = '*' />
             </Routes>
           <Footer />
-          </AuthContext>
+          </AuthProvider>
       </BrowserRouter>
     </div>
   );

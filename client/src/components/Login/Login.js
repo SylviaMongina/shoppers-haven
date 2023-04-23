@@ -7,7 +7,7 @@ import { AuthContext } from "../../context/AuthContext"
 
 export default function Login() {
   const [formData, setFormData] = useState({})
-  const {login} = useContext(AuthContext)
+  const { login } = useContext(AuthContext)
 
   function handleChange(e) {
     setFormData({

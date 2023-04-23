@@ -1,5 +1,5 @@
 class AuthController < ApplicationController
-    skip_before_action :authorized, only: [:login, :logout]
+    skip_before_action :authorized, only: [:login]
 
   def login
     @user = User.find_by(email: user_login_params[:email])
@@ -15,8 +15,8 @@ class AuthController < ApplicationController
   end
 
 def logout
-    token.delete :user_id
-    render json: { message: 'Logged out successfully' }
+    !logged_in
+    head :no_content
   end
 
   private

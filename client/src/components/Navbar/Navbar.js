@@ -1,12 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import logo from '../../assets/images/shoppers-haven-logo.png'
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import { useNavigate } from 'react-router-dom'
+import Swal from 'sweetalert2'
+// import { AuthContext } from '../../context/AuthContext'
 
 export default function Navbar() {
     const [current] = useState(false)
-
+    // const {logout} = useContext(AuthContext)
+    const navigate = useNavigate()
+   
     const navigation = [
     { name: 'Home', href: '/', current: true }, 
     { name: 'About', href: '/about', current: false },
@@ -16,11 +21,20 @@ export default function Navbar() {
     return classes.filter(Boolean).join(' ')
     }
 
-    function handleSignOut() {
-        fetch('/logout', {
-            method: 'DELETE',
+    function handleSignOut(e) {
+        fetch("/logout",{
+            method: "DELETE"
         })
-        .then(res => {res.json(); console.log(res)})
+        .then(response=>{
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'LoggedOut successfully!',
+                showConfirmButton: false,
+                timer: 3000
+              })
+              navigate("/login")
+        })
     }
 
 
@@ -131,13 +145,13 @@ export default function Navbar() {
                                 </Menu.Item>
                                 <Menu.Item>
                                     {({ active }) => (
-                                    <a
+                                    <button
                                         href="#ln"
                                         className={`${classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')} no-underline`}
-                                        onClick={(e) => handleSignOut()}
+                                        onClick={(e) => handleSignOut(e)}
                                     >
                                         Sign out
-                                    </a>
+                                    </button>
                                     )}
                                 </Menu.Item>
                                 </Menu.Items>

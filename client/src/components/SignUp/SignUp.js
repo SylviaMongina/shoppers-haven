@@ -8,7 +8,7 @@ import { Link } from "react-router-dom"
 
 export default function SignUp() {
   const [formData, setFormData] = useState({})
-  const {signup} = useContext(AuthContext)
+  const { signup } = useContext(AuthContext)
 
   function handleChange(e) {
     setFormData({

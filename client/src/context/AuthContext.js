@@ -1,6 +1,8 @@
-import {createContext, useState} from 'react'
+import {createContext, useState, useEffect } from 'react'
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom'
+
+const token = localStorage.getItem("jwt")
 
 const AuthContext = createContext()
 
@@ -23,6 +25,7 @@ function AuthProvider({children}){
           })
           .then(res => res.json())
           .then(data => {
+            localStorage.setItem("jwt", data.jwt);
             if (data.errors){
                 Swal.fire({
                     icon: 'error',
@@ -30,7 +33,7 @@ function AuthProvider({children}){
                     text: data.errors,
                   })
             }
-            else if(data.users){
+            else if(data.user){
                 Swal.fire({
                     position: 'center',
                     icon: 'success',
@@ -39,6 +42,7 @@ function AuthProvider({children}){
                     timer: 1500
                   })
                   setChange(!change)
+                  navigate('/')
             }else {
                 Swal.fire({
                     icon: 'error',
@@ -51,7 +55,7 @@ function AuthProvider({children}){
 
 
     function signup(formData) {
-        fetch('/login',{
+        fetch('/signup',{
             method: 'POST',
             headers: {
               "Accept": 'application/json',
@@ -61,13 +65,14 @@ function AuthProvider({children}){
           })
           .then(res => res.json())
           .then(data => {
+            localStorage.setItem("jwt", data.jwt);
             if (data.errors){
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
                     text: data.errors,
                   })
-            }else if(data.users){
+            }else if(data.user){
                 Swal.fire({
                     position: 'center',
                     icon: 'success',
@@ -92,7 +97,8 @@ function AuthProvider({children}){
         fetch("/me",{
             method: "GET",
             headers:{
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
             },
         }
         )
@@ -103,10 +109,15 @@ function AuthProvider({children}){
         )
     }, [change])
 
+    // const logout = () =>{
+        
+    // }
+
       const contextData = {
         login,
         signup,
-        user
+        user,
+
       }
 
     return (
