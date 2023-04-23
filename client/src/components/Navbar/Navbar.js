@@ -5,11 +5,11 @@ import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
-// import { AuthContext } from '../../context/AuthContext'
+import { AuthContext } from '../../context/AuthContext'
 
 export default function Navbar() {
     const [current] = useState(false)
-    // const {logout} = useContext(AuthContext)
+    const {setChange, change, user} = useContext(AuthContext)
     const navigate = useNavigate()
    
     const navigation = [
@@ -26,6 +26,9 @@ export default function Navbar() {
             method: "DELETE"
         })
         .then(response=>{
+            // localStorage.setItem("jwt", null)
+            localStorage.removeItem("jwt")
+            setChange(change)
             Swal.fire({
                 position: 'center',
                 icon: 'success',
@@ -89,7 +92,6 @@ export default function Navbar() {
                             </div>
                         </div>
                         <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-
                             <Menu as="div" className="relative ml-3">
                             <div>
                                 <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
