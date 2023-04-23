@@ -9,7 +9,7 @@ const AuthContext = createContext()
 function AuthProvider({children}){
 
     const [user, setUser] = useState()
-    const [change, setChange] = useState(false)
+    const [loggedIn, setLoggedIn] = useState(false)
 
     const navigate = useNavigate()
 
@@ -37,11 +37,11 @@ function AuthProvider({children}){
                 Swal.fire({
                     position: 'center',
                     icon: 'success',
-                    title: 'LoggedIn Successful',
+                    title: 'loggedIn Successful',
                     showConfirmButton: false,
                     timer: 1500
                   })
-                  setChange(change)
+                  setLoggedIn(true)
                   navigate('/')
             }else {
                 Swal.fire({
@@ -80,7 +80,6 @@ function AuthProvider({children}){
                     showConfirmButton: false,
                     timer: 1500
                   })
-                  // setChange(!change)
                   navigate('/login')
             }else {
                 Swal.fire({
@@ -107,19 +106,14 @@ function AuthProvider({children}){
             setUser(response)
         }
         )
-    }, [change])
-
-    // const logout = () =>{
-        
-    // }
+    }, [loggedIn])
 
       const contextData = {
         login,
         signup,
         user,
-        change,
-        setChange
-
+        setLoggedIn,
+        loggedIn,
       }
 
     return (
