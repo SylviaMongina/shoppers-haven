@@ -41,7 +41,7 @@ function AuthProvider({children}){
                     showConfirmButton: false,
                     timer: 1500
                   })
-                  setLoggedIn(!loggedIn)
+                  setLoggedIn(true)
                   navigate('/')
             }else {
                 Swal.fire({
@@ -80,7 +80,6 @@ function AuthProvider({children}){
                     showConfirmButton: false,
                     timer: 1500
                   })
-                  setLoggedIn(!loggedIn)
                   navigate('/login')
             }else {
                 Swal.fire({
@@ -109,15 +108,12 @@ function AuthProvider({children}){
         )
     }, [loggedIn])
 
-    // const logout = () =>{
-        
-    // }
-
       const contextData = {
         login,
         signup,
         user,
-        loggedIn
+        setLoggedIn,
+        loggedIn,
       }
 
     return (
