@@ -24,12 +24,12 @@ export default function SignUp() {
 
   return (
       <div className="mt-5 shadow">
-        <div className="flex min-h-full items-center justify-center">
-          <div className="flex flex-1 flex-col sign-up-card shadow items-center justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
-            <div className="mx-auto w-full max-w-sm lg:w-96">
+        <div className="flex min-h-full items-center justify-center ">
+          <div className="flex flex-1 flex-col  bg-slate-100 sign-up-card shadow items-center justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
+            <div className="mx-auto w-full max-w-sm lg:w-96 ">
               <div>
                 <img
-                  className="logo w-auto mb-3 shadow rounded-full"
+                  className="logo w-auto mb-3 shadow rounded-full bg-white"
                   src={shopperlogo}
                   alt="Your Company"
                 />
