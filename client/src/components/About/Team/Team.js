@@ -1,39 +1,40 @@
+import sylvia from '../../../assets/group-members-images/sylvia.jpeg'
+import morris from '../../../assets/group-members-images/morris.jpg'
+import brian from '../../../assets/group-members-images/brian.jpeg'
+import paul from '../../../assets/group-members-images/paul.jpeg'
+import denno from '../../../assets/group-members-images/denno.enc'
+
+
 const people = [
     {
       name: 'Sylvia Bosire',
       role: 'Front-End Developer',
-      imageUrl:
-        'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+      imageUrl: sylvia,
     },
     {
         name: 'Dennis Mwaniki',
         role: 'Front-End Developer',
-        imageUrl:
-          'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+        imageUrl: denno
       },
       {
         name: 'Morris Waithaka',
         role: 'Front-End Developer',
-        imageUrl:
-          'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+        imageUrl: morris
       },
       {
         name: 'Brian Mwita',
         role: 'Back-End Developer',
-        imageUrl:
-          'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+        imageUrl: brian
       },
       {
         name: 'Paul Ngugi',
         role: 'Back-End Developer',
-        imageUrl:
-          'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+        imageUrl: paul
       },
       {
         name: 'Joseph Ochieng',
         role: 'Back-End Developer',
-        imageUrl:
-          'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+        imageUrl: 'https://cdn-icons-png.flaticon.com/512/666/666201.png',
       }
     // More people...
   ]
