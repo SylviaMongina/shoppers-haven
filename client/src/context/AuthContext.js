@@ -9,7 +9,7 @@ const AuthContext = createContext()
 function AuthProvider({children}){
 
     const [user, setUser] = useState()
-    const [change, setChange] = useState(false)
+    const [loggedIn, setLoggedIn] = useState(false)
 
     const navigate = useNavigate()
 
@@ -37,17 +37,17 @@ function AuthProvider({children}){
                 Swal.fire({
                     position: 'center',
                     icon: 'success',
-                    title: 'LoggedIn Successful',
+                    title: 'Logged In Successfully',
                     showConfirmButton: false,
                     timer: 1500
                   })
-                  setChange(!change)
+                  setLoggedIn(true)
                   navigate('/')
             }else {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Oops...',
-                    text: 'Something went wrong!',
+                    title: 'Login Failed',
+                    text: 'Invalid Email or Password!',
                   })
             }
           })
@@ -69,9 +69,10 @@ function AuthProvider({children}){
             if (data.errors){
                 Swal.fire({
                     icon: 'error',
-                    title: 'Oops...',
-                    text: data.errors,
+                    title: 'Wrong credentials!',
+                    text: data.errors[0],
                   })
+                  console.log(data.errors)
             }else if(data.user){
                 Swal.fire({
                     position: 'center',
@@ -80,7 +81,6 @@ function AuthProvider({children}){
                     showConfirmButton: false,
                     timer: 1500
                   })
-                  setChange(!change)
                   navigate('/login')
             }else {
                 Swal.fire({
@@ -107,17 +107,14 @@ function AuthProvider({children}){
             setUser(response)
         }
         )
-    }, [change])
-
-    // const logout = () =>{
-        
-    // }
+    }, [loggedIn])
 
       const contextData = {
         login,
         signup,
         user,
-
+        setLoggedIn,
+        loggedIn,
       }
 
     return (
