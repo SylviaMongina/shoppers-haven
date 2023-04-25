@@ -1,7 +1,7 @@
 import './Mission.css'
-import Team from '../Team/Team'
+import Contact from '../Contact/Contact'
 
-export default function Example() {
+export default function Mission() {
   return (
     <>
     <div className="relative mission-div " >
@@ -44,7 +44,7 @@ export default function Example() {
         </div>
       </div>
     </div>
-    <Team/>
+    <Contact/>
     </>
   )
 }
