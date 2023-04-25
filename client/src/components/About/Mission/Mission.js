@@ -1,5 +1,5 @@
 import './Mission.css'
-import Team from '../Team/Team'
+import Contact from '../Contact/Contact'
 
 export default function Mission() {
   return (
@@ -44,7 +44,7 @@ export default function Mission() {
         </div>
       </div>
     </div>
-    <Team/>
+    <Contact/>
     </>
   )
 }
