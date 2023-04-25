@@ -1,7 +1,7 @@
 import './About.css'
 import Mission from '../About/Mission/Mission'
 
-export default function Example() {
+export default function About() {
   return (
     <>
     <div className="bg-gray-50 pt-12 sm:pt-16 mt-5">

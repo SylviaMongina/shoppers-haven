@@ -1,7 +1,7 @@
 import './Mission.css'
 import Team from '../Team/Team'
 
-export default function Example() {
+export default function Mission() {
   return (
     <>
     <div className="relative mission-div " >
