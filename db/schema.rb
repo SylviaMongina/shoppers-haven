@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema[7.0].define(version: 2023_04_25_185258) do
-
-ActiveRecord::Schema[7.0].define(version: 2023_04_25_121113) do
-
+ActiveRecord::Schema[7.0].define(version: 2023_04_25_205941) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -34,9 +30,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_25_121113) do
     t.bigint "ecommerce_website_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "image_url"
     t.string "website_url"
     t.string "website_name"
+    t.string "Image_url"
     t.index ["ecommerce_website_id"], name: "index_products_on_ecommerce_website_id"
   end
 
@@ -65,7 +61,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_25_121113) do
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "Image_url"
   end
 
   add_foreign_key "products", "ecommerce_websites"
