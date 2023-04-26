@@ -60,7 +60,7 @@ function SearchPage() {
   const [productsPerPage] = useState(5)
   const indexOfLastShipment = currentPage * productsPerPage //5
   const indexOfFirstShipment = indexOfLastShipment - productsPerPage //0
-  const currentProducts = products.slice(indexOfFirstShipment , indexOfLastShipment)
+  const currentProducts = products?.slice(indexOfFirstShipment , indexOfLastShipment)
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
