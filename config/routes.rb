@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   resources :ratings
   resources :products
   resources :ecommerce_websites
-  resources :search_histories
+  resources :search_histories, only: %i[index create]
   resources :users
 
   post "/login", to:"auth#login"

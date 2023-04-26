@@ -1,10 +1,8 @@
 class SearchHistoriesController < ApplicationController
   before_action :set_search_history, only: %i[ show update destroy ]
 
-  # GET /search_histories
   def index
-    @search_histories = SearchHistory.all
-
+    @search_histories = current_user.search_histories
     render json: @search_histories
   end
 
