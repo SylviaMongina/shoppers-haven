@@ -1,0 +1,70 @@
+.header-div {
+    background-image: url('../../assets/images/shoppers-photo.jpg');
+    background-size: cover;
+    color: white;
+    height: 100vh;
+    width: auto;
+    position: relative;
+    isolation: isolate;
+    object-fit: cover;
+}
+
+.header-div::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: black;
+    opacity: .4;
+}
+
+@media (width <= 800px) {
+    .header {
+        font-size: 4.3rem;
+        margin-bottom: 2rem;
+    }
+
+    .search-div {
+        width: 80%;
+    }
+
+    .what-we-do {
+        width: 70%;
+    }
+
+    .right-rectangle {
+        width: 30px;
+    }
+}
+
+.left-rectangle {
+    height: 400px;
+    width: 300px;
+    background-color: #14B8A6;
+    border-radius: 10px;
+    position: absolute;
+    bottom: -95vh;
+    left: 50px;
+    z-index: -1;
+}
+
+.right-rectangle {
+    height: 400px;
+    width: 300px;
+    background-color: #14B8A6;
+    border-radius: 10px;
+    position: absolute;
+    right: 50px;
+    bottom: -30vh;
+    z-index: -1;
+}
+
+.button {
+    background-color: #14B8A6;
+}
+
+.search-button {
+    aspect-ratio: 1/1;
+    width: 40px;
+    background-color: #14B8A6;
+    border-radius: 50%;
+}
