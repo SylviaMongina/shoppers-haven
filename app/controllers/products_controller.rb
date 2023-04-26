@@ -2,11 +2,17 @@ class ProductsController < ApplicationController
   # before_action :set_product, only: %i[ show update destroy index ]
 
   # GET /products
-  def index
+def index
+  if params[:search].present?
+    @products = Product.where("name LIKE ?", "%#{params[:search]}%")
+  else
     @products = Product.all
-
-    render json: @products
   end
+      
+  render json: @products
+end
+
+  
 
   # GET /products/1
   def show
