@@ -1,7 +1,6 @@
 class ProductsController < ApplicationController
-  
-  skip_before_action :authorized,  only: %i[ index show ]
-  
+  # before_action :set_product, only: %i[ show update destroy index ]
+
   # GET /products
 def index
   if params[:search].present?
