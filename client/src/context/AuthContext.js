@@ -139,7 +139,8 @@ function AuthProvider({children}){
         login,
         signup,
         loggedIn,
-        handleSignOut
+        handleSignOut,
+        user
       }
 
     return (
