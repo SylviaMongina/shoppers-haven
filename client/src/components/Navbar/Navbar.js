@@ -9,7 +9,9 @@ import { AuthContext } from '../../context/AuthContext'
 
 export default function Navbar() {
     const [current] = useState(false)
-    const {setLoggedIn, loggedIn, user} = useContext(AuthContext)
+
+    const { handleSignOut, loggedIn} = useContext(AuthContext)
+    
     const navigate = useNavigate()
    
     const navigation = [
@@ -21,24 +23,6 @@ export default function Navbar() {
     return classes.filter(Boolean).join(' ')
     }
 
-    function handleSignOut(e) {
-        fetch("/logout",{
-            method: "DELETE"
-        })
-        .then(response=>{
-            // localStorage.setItem("jwt", null)
-            localStorage.removeItem("jwt")
-            setLoggedIn(false)
-            Swal.fire({
-                position: 'center',
-                icon: 'success',
-                title: 'LoggedOut successfully!',
-                showConfirmButton: false,
-                timer: 3000
-              })
-              navigate("/login")
-        })
-    }
 
   return (
     <div>
