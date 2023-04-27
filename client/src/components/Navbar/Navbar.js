@@ -9,7 +9,9 @@ import { AuthContext } from '../../context/AuthContext'
 
 export default function Navbar() {
     const [current] = useState(false)
+
     const { handleSignOut, loggedIn} = useContext(AuthContext)
+    
     const navigate = useNavigate()
    
     const navigation = [
