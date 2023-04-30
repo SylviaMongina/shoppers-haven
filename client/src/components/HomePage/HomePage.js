@@ -6,21 +6,23 @@ import { AuthContext } from '../../context/AuthContext'
 
 export let query = ""
 
-
 function Home() {
   const navigate = useNavigate()
-  const {user} = useContext(AuthContext)
+  const {user, token} = useContext(AuthContext)
+  // const [query, setQuery] = useState()
+
   
 
   function handleSearch() {
     fetch('/search_histories', {
-      'method': 'POST',
-      'headers': {
+      method: 'POST',
+      headers: {
         'contentType': 'application/json',
-        'accept': 'application/json'
+        'accept': 'application/json',
+        "Authorization": `Bearer ${token}`
       },
-      'body': JSON.stringify({
-        query: query,
+      body:JSON.stringify({
+        query,
         user_id: user.id
       })
     })
@@ -46,10 +48,12 @@ function Home() {
               placeholder="Search"
               type="search"
               onChange={(e) => query = e.target.value}
+              // onChange={(e)=>setQuery(e.target.value)}
             />
           </div>
           <div>
           <MagnifyingGlassIcon onClick={() => handleSearch()} className="p-2 ml-5 text-white search-button cursor-pointer" aria-hidden="true" />
+
           </div>
         </div>
       </div>
@@ -71,3 +75,5 @@ function Home() {
 }
 
 export default Home
+
+

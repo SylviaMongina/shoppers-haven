@@ -8,15 +8,15 @@ import Swal from 'sweetalert2'
 import { AuthContext } from '../../context/AuthContext'
 
 export default function Navbar() {
-    const [current] = useState(false)
+    const [current, setCurrent] = useState(false)
 
     const { handleSignOut, loggedIn} = useContext(AuthContext)
     
     const navigate = useNavigate()
    
     const navigation = [
-    { name: 'Home', href: '/', current: true }, 
-    { name: 'About', href: '/about', current: false },
+    { name: 'Home', href: '/', current }, 
+    { name: 'About', href: '/about', current },
     ]
 
     function classNames(...classes) {
@@ -60,6 +60,7 @@ export default function Navbar() {
                                 {navigation.map((item) => (
                                 <a
                                     key={item.name}
+                                    onClick={()=>setCurrent(!current)}
                                     style = {{textDecoration: "none"  }}
                                     href={item.href}
                                     className={classNames(
