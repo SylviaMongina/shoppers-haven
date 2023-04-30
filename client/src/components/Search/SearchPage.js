@@ -6,6 +6,7 @@ import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import DotLoader from "react-spinners/DotLoader";
 import './search.css'
 import Paginate from './Paginate'
+import { AuthContext } from '../../context/AuthContext'
 import { query } from '../HomePage/HomePage'
 import { ProductContext } from '../../context/ProductContext'
 import FilterProducts from './FilterProducts'
@@ -28,11 +29,13 @@ function classNames(...classes) {
 }
 
 
+
 function SearchPage() {
   // const {products} = useContext(ProductContext)
   const { productState:{delivery_cost , searchQuery, sort}, productDispatch } = useContext(ProductContext)
   const [loading, setLoading] = useState(false)
   const [products, setProducts] = useState([])
+  const [search, setSearch] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [productsPerPage] = useState(5)
   const indexOfLastShipment = currentPage * productsPerPage //5
@@ -44,12 +47,13 @@ function SearchPage() {
 
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber)
-
+  
+  
   useEffect(() => {
     setLoading(true)
     setTimeout(() => {
       setLoading(false)
-    }, 1000)
+    }, 2000)
   }, [])
 
   useEffect(() => {
@@ -136,7 +140,7 @@ function SearchPage() {
                 />
             </div>
             <div>
-                <MagnifyingGlassIcon className="p-2 mx-2 text-white search-button cursor-pointer" aria-hidden="true" />
+                <MagnifyingGlassIcon onClick={handleSearch} className="p-2 mx-2 text-white search-button cursor-pointer" aria-hidden="true" />
             </div>
         </div>
         <div className="top-16 w-72">
@@ -331,12 +335,10 @@ function SearchPage() {
                                         <a target='blank' href={product.website_url} className="ml-4 text-white font-medium no-underline px-4 py-2 rounded button shadow">Go to Store</a>
                                     </div>
                                     <p className="mt-0 text-lg">From {product.website_name}</p>
-                                    <p className="mt-1 text-sm text-gray-500">{product.color}</p>
-                                    <p className="mt-1 text-sm text-gray-500">{product.size}</p>
                                     </div>
 
                                     <div className="flex flex-1 items-end justify-between">
-                                        <p className="text-sm font-medium hover:text-indigo-500">
+                                        <p className="text-3xl font-medium hover:text-indigo-500">
                                         <span>Price: ${product.price}</span>
                                         </p>
                                     </div>
