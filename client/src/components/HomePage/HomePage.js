@@ -3,11 +3,10 @@ import './homepage.css'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../context/AuthContext'
-import SearchPage from '../Search/SearchPage'
 
 export let query = ""
 
-function Home() {
+export default function Home() {
   const navigate = useNavigate()
   const {token, user} = useContext(AuthContext)
   const [searchQuery, setSearchQuery] = useState("")
@@ -27,8 +26,8 @@ function Home() {
           user_id: user.id
         })
       })
-navigate('/search')
-   
+    }
+   navigate('/search')
   }
 
   return (
@@ -55,16 +54,16 @@ navigate('/search')
           />
             :
             <input
-            type="text" id="error" class="bg-red-50 pl-10 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 
+            type="text" id="error" className="bg-red-50 pl-10 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 
              focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500" placeholder="Cannot be empty"
-             onChange={(e) => {query = e.target.value; setSearchQuery(e.target.value);}}
+             onChange={(e) => {query = e.target.value; setSearchQuery(e.target.value); }}
           />
           }
             
           </div>
           <div>
           {query ?
-          <MagnifyingGlassIcon  onClick={() => handleSearch()} className="p-2 ml-5 text-white search-button cursor-pointer " aria-hidden="true" />
+          <MagnifyingGlassIcon  onClick={handleSearch} className="p-2 ml-5 text-white search-button cursor-pointer " aria-hidden="true" />
             :
             <MagnifyingGlassIcon className="p-2 ml-5 text-white search-button cursor-pointer cursor-not-allowed" aria-hidden="true" />
           }
@@ -87,7 +86,3 @@ navigate('/search')
     </>
   )
 }
-
-export default Home
-
-

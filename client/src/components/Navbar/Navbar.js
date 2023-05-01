@@ -5,6 +5,7 @@ import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../context/AuthContext'
+import avatar from '../../assets/images/avatar.png'
 export let query = "";
 
 
@@ -81,11 +82,20 @@ export default function Navbar() {
                                 (<div>
                                     <Menu.Button className="flex rounded-full bg-cover bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                                     <span className="sr-only">Open user menu</span>
-                                    <img
+                                    {
+                                        user.image_url ? 
+                                        <img
                                         className="h-16 w-16 rounded-full bg-cover"
                                         src={user.image_url}
                                         alt=""
-                                    />
+                                        /> 
+                                    :
+                                        <img
+                                        className="h-16 w-16 rounded-full bg-cover"
+                                        src={avatar}
+                                        alt=""
+                                        /> 
+                                    }
                                     </Menu.Button>
                                     <Transition
                                         as={Fragment}

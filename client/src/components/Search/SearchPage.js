@@ -37,10 +37,9 @@ function SearchPage() {
   const [productsPerPage] = useState(5)
   const indexOfLastShipment = currentPage * productsPerPage //5
   const indexOfFirstShipment = indexOfLastShipment - productsPerPage //0
-  const {user, token} = useContext(AuthContext)
+  const {user, token, loggedIn} = useContext(AuthContext)
   const [selected, setSelected] = useState(relevance[3])
   const [searches, setSearches] = useState([]);
-  const [searchHistory, setSearchHistory] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [show, setShow] = useState(false);
 
@@ -51,7 +50,7 @@ function SearchPage() {
 
 
   useEffect(() => {
-    // setLoading(true)
+    setLoading(true)
     fetch(`/products?search=${query}`,{
       method: 'GET',
       headers: {
@@ -60,9 +59,9 @@ function SearchPage() {
     })
     .then(r => r.json())
     .then((data) => setProducts(data))
-    // setTimeout(() => {
-    //   setLoading(false)
-    // }, 1500)
+    setTimeout(() => {
+      setLoading(false)
+    }, 1500)
   }, [])
 
   
@@ -98,6 +97,39 @@ function SearchPage() {
     })
   }
 
+  function searchHistory(history){
+    setLoading(true)
+    fetch(`/products?search=${history}`,{
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(r => r.json())
+    .then((data) => {
+      setProducts(data)
+      setTimeout(() => {
+        setLoading(false)
+      }, 1500)
+    })
+  }
+
+  function allProducts() {
+    setLoading(true)
+    fetch(`/products`,{
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(r => r.json())
+    .then((data) => {
+      setProducts(data)
+      setTimeout(() => {
+        setLoading(false)
+      }, 1500)
+    })
+  }
 
   const transformProducts = () => {
     let sortedProducts = products;
@@ -157,7 +189,7 @@ function SearchPage() {
       :
 
     (<div className='mt-24'>
-      <div className='flex justify-around'>
+      <div className='flex  justify-around search-bar'>
         <div className="p-2 rounded-lg w-5/12 search-div flex shadow bg-white">
             <label htmlFor="search" className="sr-only">
                 Search
@@ -178,7 +210,7 @@ function SearchPage() {
                 />
                 :
                 <input
-                  type="text" id="error" class="bg-red-50 pl-10 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700
+                  type="text" id="error" className="bg-red-50 pl-10 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700
                    focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500" placeholder="Cannot be empty"
                    onChange={(e) => {setSearchQuery(e.target.value);}}
                 />
@@ -212,6 +244,7 @@ function SearchPage() {
             >
                 <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <div className="py-1">
+                    { loggedIn ? 
                     <Menu.Item>
                     {({ active }) => (
                         <button
@@ -225,6 +258,9 @@ function SearchPage() {
                         </button>
                     )}
                     </Menu.Item>
+                    :
+                    null
+                    }
                     <Menu.Item>
                     {({ active }) => (
                         <button
@@ -232,6 +268,7 @@ function SearchPage() {
                             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                             'block w-full px-4 py-2 text-left text-sm'
                         )}
+                        onClick={allProducts}
                         >
                         Popular Searches
                         </button>
@@ -407,16 +444,16 @@ function SearchPage() {
         </div>
       </div>
       <div className="bg-white">
-        <div className="mx-auto w-9/12 py-3 px-4 sm:py-24 sm:px-6 lg:px-0">
-            <h1 className="text-center text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Results</h1>
+        <div className="ul mx-auto w-9/12 py-3 sm:py-24 sm:px-0 lg:px-0">
+            <h1 className="mt-4 text-center text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl ">Results</h1>
             <div className="mt-12 w-full">
                 <section aria-labelledby="cart-heading">
                     <h2 id="cart-heading" className="sr-only">
                     Items in your shopping cart
                     </h2>
-                    <ul className="divide-y divide-gray-200 border-t border-b border-gray-200">
+                    <ul className=" divide-y divide-gray-200 border-t border-b border-gray-200 p-1">
                         {transformProducts().slice(indexOfFirstShipment , indexOfLastShipment).map((product) => (                          
-                              <li key={product.id} className="flex py-6">
+                              <li key={product.id} className="flex py-6 product-list">
                                 <div className="flex-shrink-0">
                                     <img
                                     src={product.image_url}
@@ -433,7 +470,7 @@ function SearchPage() {
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
   <path d="M9.653 16.915l-.005-.003-.019-.01a20.759 20.759 0 01-1.162-.682 22.045 22.045 0 01-2.582-1.9C4.045 12.733 2 10.352 2 7.5a4.5 4.5 0 018-2.828A4.5 4.5 0 0118 7.5c0 2.852-2.044 5.233-3.885 6.82a22.049 22.049 0 01-3.744 2.582l-.019.01-.005.003h-.002a.739.739 0 01-.69.001l-.002-.001z" />
 </svg>
-                                        <a target='blank' href={product.website_url} className="ml-4 text-white font-medium no-underline px-4 py-2 rounded button shadow">Go to Store</a>
+                                        <a target='blank' href={product.website_url} className="ml-4 store-link text-white font-medium no-underline px-4 py-2 rounded button shadow">Go to Store</a>
                                         
 
                                     </div>
@@ -470,7 +507,7 @@ function SearchPage() {
         <ul className="divide-y divide-gray-100">
           {searches.map((search) => (
             <li key={search.id} className="flex justify-between py-3">
-              <button className="mt-0 truncate text-xl leading-5">{search.query}</button>
+              <button onClick={() => {searchHistory(search.query) ;handleClose()}} className="mt-0 truncate text-xl leading-5">{search.query}</button>
             </li>
           ))}
         </ul>
