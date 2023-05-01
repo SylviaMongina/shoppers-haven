@@ -53,7 +53,19 @@ export default function Navbar() {
          
     }
 
-console.log(searches)
+//     function handleClickSearch(){
+//         fetch(`/products?search=${search.query}`,{
+//             method: 'GET',
+//             headers: {
+//               'Content-Type': 'application/json',
+//               'Authorization': `Bearer ${token}`
+//             },
+//           })
+//           .then(r => r.json())
+//           .then((data) => setProducts(data))
+//     }
+
+// console.log(searches)
 
   return (
     <div>
@@ -224,7 +236,7 @@ console.log(searches)
                         <li key={search.id} className="flex py-4">
                         <div className="ml-1">
                             {/* <p className="text-sm font-medium text-gray-900 mb-0" onClick={()=>handleClickSearch}>{search.query}</p> */}
-                            <button className="text-sm font-medium text-gray-900 mb-0"  >{search.query}</button>
+                            <button className="text-sm font-medium text-gray-900 mb-0" >{search.query}</button>
                         </div>
                         </li>
                     ))}
