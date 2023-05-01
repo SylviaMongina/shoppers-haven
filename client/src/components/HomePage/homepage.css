@@ -68,3 +68,8 @@
     background-color: #14B8A6;
     border-radius: 50%;
 }
+
+.required:after {
+    content:" *";
+    color: red;
+  }

@@ -40,18 +40,32 @@ function Home() {
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
               <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
             </div>
+            {query ? 
             <input
-              id="search"
-              name="search"
-              className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-10 pr-3 text-lg placeholder-gray-500 focus:border-green-500 focus:text-gray-900 focus:placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-green-500 sm:text-sm"
-              placeholder="Search"
-              type="search"
-              onChange={(e) => {query = e.target.value; setSearchQuery(e.target.value);}}
-            />
+            id="search"
+            name="search"
+            className="required block w-full rounded-md border border-gray-300 bg-white py-2 pl-10 pr-3 text-lg placeholder-gray-500 focus:border-green-500 focus:text-gray-900 focus:placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-green-500 sm:text-sm"
+            placeholder="Search"
+            required
+            type="search"
+            onChange={(e) => {query = e.target.value; setSearchQuery(e.target.value);}}
+          />
+            :
+            <input
+            type="text" id="error" class="bg-red-50 pl-10 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700
+             focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500" placeholder="Cannot be empty"
+             onChange={(e) => {query = e.target.value; setSearchQuery(e.target.value);}}
+          />
+          // <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Oh, snapp!</span> Some error message.</p>
+          }
+            
           </div>
           <div>
-          <MagnifyingGlassIcon onClick={() => handleSearch()} className="p-2 ml-5 text-white search-button cursor-pointer" aria-hidden="true" />
-
+          {query ?
+          <MagnifyingGlassIcon  onClick={() => handleSearch()} className="p-2 ml-5 text-white search-button cursor-pointer " aria-hidden="true" />
+            :
+            <MagnifyingGlassIcon className="p-2 ml-5 text-white search-button cursor-pointer cursor-not-allowed" aria-hidden="true" />
+          }
           </div>
         </div>
       </div>
