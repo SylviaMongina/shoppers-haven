@@ -32,11 +32,13 @@ export default function SignUp() {
       reader.onload = () => {
         uploadedImage = reader.result
         pictureDiv.style.backgroundImage = `url(${uploadedImage})`
+        setFormData({...formData,
+          [e.target.name] : uploadedImage
+        })
       }
       if(file){
         reader.readAsDataURL(file)
       }
-
   }
 
   return (
@@ -141,7 +143,7 @@ export default function SignUp() {
                       <div className="mt-1 flex flex-row-reverse justify-between items-center">
                         <input
                           id="picture-input"
-                          name="picture"
+                          name="image_url"
                           type="file"
                           accept="image/jpeg, image/jpg, image/png"
                           onChange={addImage}

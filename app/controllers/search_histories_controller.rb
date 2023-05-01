@@ -51,3 +51,4 @@ end
   params.require(:search_history).permit(:query, :user_id)
 end
 end
+# require(:search_history).
