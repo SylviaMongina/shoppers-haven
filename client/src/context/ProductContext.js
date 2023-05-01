@@ -14,18 +14,18 @@ function ProductProvider({children}){
       });
     
 // console.log(products)
-    // useEffect(() => {
-    //     // fetch(`/products?search=${query}`)
-    //     fetch('/products',{
-    //       method: 'GET',
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //         'Authorization': `Bearer ${token}`
-    //       },
-    //     })
-    //     .then(r => r.json())
-    //     .then((data) => setProducts(data))
-    //   }, [user])
+    useEffect(() => {
+        // fetch(`/products?search=${query}`)
+        fetch('/products',{
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+        })
+        .then(r => r.json())
+        .then((data) => setProducts(data))
+      }, [user])
     
 
 

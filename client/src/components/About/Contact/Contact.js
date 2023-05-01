@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 import { Popover, Transition } from '@headlessui/react'
 import { Bars3Icon, EnvelopeIcon, PhoneIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
@@ -105,6 +105,31 @@ const footerNavigation = {
 }
 
 export default function Contact() {
+
+  const [formData, setFormData] = useState({})
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+        [e.target.name] : e.target.value
+    })
+  }
+
+  const handleSubmit = (e)=>{
+    e.preventDefault()
+    fetch('/feedbacks', {
+      method: 'POST',
+      headers:{
+        "Content-Type": "application/json"
+      },
+      body:JSON.stringify(formData),
+    })
+    .then(r => r.json())
+    .then(data => (console.log(data)))
+    console.log(formData)
+
+  }
+console.log(formData)
   return (
     <div className="bg-white mb-5">
       <main className="overflow-hidden">
@@ -308,7 +333,7 @@ export default function Contact() {
                 {/* Contact form */}
                 <div className="py-10 px-6 sm:px-10 lg:col-span-2 xl:p-12">
                   <h3 className="text-lg font-medium text-warm-gray-900">Send us a message</h3>
-                  <form action="#" method="POST" className="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8">
+                  <form action="#" method="POST" className="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8" onSubmit={(e)=>handleSubmit(e)}>
                     <div>
                       <label htmlFor="first-name" className="block text-sm font-medium text-warm-gray-900">
                         First name
@@ -316,10 +341,11 @@ export default function Contact() {
                       <div className="mt-1">
                         <input
                           type="text"
-                          name="first-name"
+                          name="first_name"
                           id="first-name"
                           autoComplete="given-name"
                           className="block w-full rounded-md border-warm-gray-300 py-2 px-2 text-warm-gray-900 shadow-sm focus:border-teal-500 focus:ring-teal-500"
+                          onChange={handleChange}
                         />
                       </div>
                     </div>
@@ -330,10 +356,11 @@ export default function Contact() {
                       <div className="mt-1">
                         <input
                           type="text"
-                          name="last-name"
+                          name="last_name"
                           id="last-name"
                           autoComplete="family-name"
                           className="block w-full rounded-md border-warm-gray-300 py-2 px-4 text-warm-gray-900 shadow-sm focus:border-teal-500 focus:ring-teal-500"
+                          onChange={handleChange}
                         />
                       </div>
                     </div>
@@ -348,6 +375,7 @@ export default function Contact() {
                           type="email"
                           autoComplete="email"
                           className="block w-full rounded-md border-warm-gray-300 py-2 px-4 text-warm-gray-900 shadow-sm focus:border-teal-500 focus:ring-teal-500"
+                          onChange={handleChange}
                         />
                       </div>
                     </div>
@@ -368,6 +396,7 @@ export default function Contact() {
                           autoComplete="tel"
                           className="block w-full rounded-md border-warm-gray-300 py-2 px-4 text-warm-gray-900 shadow-sm focus:border-teal-500 focus:ring-teal-500"
                           aria-describedby="phone-optional"
+                          onChange={handleChange}
                         />
                       </div>
                     </div>
@@ -381,6 +410,7 @@ export default function Contact() {
                           name="subject"
                           id="subject"
                           className="block w-full rounded-md border-warm-gray-300 py-2 px-4 text-warm-gray-900 shadow-sm focus:border-teal-500 focus:ring-teal-500"
+                          onChange={handleChange}
                         />
                       </div>
                     </div>
@@ -401,6 +431,7 @@ export default function Contact() {
                           className="block w-full rounded-md border-warm-gray-300 py-2 px-4 text-warm-gray-900 shadow-sm focus:border-teal-500 focus:ring-teal-500"
                           aria-describedby="message-max"
                           defaultValue={''}
+                          onChange={handleChange}
                         />
                       </div>
                     </div>
@@ -408,6 +439,7 @@ export default function Contact() {
                       <button
                         type="submit"
                         className="mt-2 inline-flex w-full items-center justify-center rounded-md border border-transparent bg-teal-500 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 sm:w-auto"
+                        
                       >
                         Submit
                       </button>
