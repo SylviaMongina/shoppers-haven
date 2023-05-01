@@ -1,5 +1,7 @@
 require_relative "boot"
 
+require 'dotenv/rails-now'
+
 require "rails"
 require 'sprockets/railtie'
 require 'active_job'
@@ -29,13 +31,9 @@ module ShoppersHaven
     #
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
-    #
-    # config.time_zone = "Central Time (US & Canada)"
-    # config.eager_load_paths << Rails.root.join("extras")
 
-    # Only loads a smaller set of middleware suitable for API only apps.
-    # Middleware like session, flash, cookies can be added back manually.
-    # Skip views, helpers and assets when generating a new resource.
-    config.api_only = true
+    # Uncomment if you wish to allow Action Cable access from any origin.
+    # config.action_cable.disable_request_forgery_protection = true
   end
 end
+

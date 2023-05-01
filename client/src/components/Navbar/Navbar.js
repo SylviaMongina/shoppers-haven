@@ -53,7 +53,6 @@ export default function Navbar() {
          
     }
 
-
   return (
     <div>
       <Disclosure as="nav" className="bg-gray-800 fixed w-full z-20">
@@ -223,7 +222,7 @@ export default function Navbar() {
                         <li key={search.id} className="flex py-4">
                         <div className="ml-1">
                             {/* <p className="text-sm font-medium text-gray-900 mb-0" onClick={()=>handleClickSearch}>{search.query}</p> */}
-                            <button onClick={() => {console.log(query)}} className="text-sm font-medium text-gray-900 mb-0"  >{search.query}</button>
+                            <button className="text-sm font-medium text-gray-900 mb-0"  >{search.query}</button>
                         </div>
                         </li>
                     ))}
