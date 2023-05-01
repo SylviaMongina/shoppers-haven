@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../context/AuthContext'
 import DotLoader from "react-spinners/DotLoader";
 import Modal from 'react-bootstrap/Modal';
+export let query = "";
 
 
 export default function Navbar() {
@@ -16,7 +17,6 @@ export default function Navbar() {
     const [searches, setSearches] = useState([]);
     const [loading, setLoading] = useState(false)
 
-    
     const { handleSignOut, loggedIn, user, token} = useContext(AuthContext)
     
     const navigate = useNavigate()
@@ -47,13 +47,12 @@ export default function Navbar() {
          .then(data => {
             setTimeout(() => {
                 setLoading(false)
-              }, 2500)
+              }, 1000)
             setSearches(data)
         })
          
     }
 
-console.log(searches)
 
   return (
     <div>
@@ -224,7 +223,7 @@ console.log(searches)
                         <li key={search.id} className="flex py-4">
                         <div className="ml-1">
                             {/* <p className="text-sm font-medium text-gray-900 mb-0" onClick={()=>handleClickSearch}>{search.query}</p> */}
-                            <button className="text-sm font-medium text-gray-900 mb-0"  >{search.query}</button>
+                            <button onClick={() => {console.log(query)}} className="text-sm font-medium text-gray-900 mb-0"  >{search.query}</button>
                         </div>
                         </li>
                     ))}
