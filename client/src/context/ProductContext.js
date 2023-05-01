@@ -9,7 +9,7 @@ function ProductProvider({children}){
      const [products, setProducts] = useState()
 
      const [productState, productDispatch] = useReducer(productReducer, {
-        delivery_cost: 0,
+        delivery_cost: "",
         searchQuery: "",
       });
     

@@ -3,6 +3,7 @@ import './homepage.css'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../context/AuthContext'
+import SearchPage from '../Search/SearchPage'
 
 export let query = ""
 
@@ -26,11 +27,8 @@ function Home() {
           user_id: user.id
         })
       })
-      navigate('/search')
-    }
-    else
-    navigate('/search')
-    
+navigate('/search')
+   
   }
 
   return (
@@ -61,7 +59,6 @@ function Home() {
              focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500" placeholder="Cannot be empty"
              onChange={(e) => {query = e.target.value; setSearchQuery(e.target.value);}}
           />
-          // <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Oh, snapp!</span> Some error message.</p>
           }
             
           </div>
