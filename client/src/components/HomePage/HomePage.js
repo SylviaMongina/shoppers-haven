@@ -13,19 +13,24 @@ function Home() {
   
 
   function handleSearch() {
-    fetch('/search_histories', {
-      method: 'POST',
-      headers: {
-        "Accept": 'application/json',
-        "Content-Type": 'application/json',
-        "Authorization": `Bearer ${token}`
-      },
-      body: JSON.stringify({
-        query: searchQuery,
-        user_id: user.id
+    if(user){
+      fetch('/search_histories', {
+        method: 'POST',
+        headers: {
+          "Accept": 'application/json',
+          "Content-Type": 'application/json',
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          query: searchQuery,
+          user_id: user.id
+        })
       })
-    })
+      navigate('/search')
+    }
+    else
     navigate('/search')
+    
   }
 
   return (
@@ -52,7 +57,7 @@ function Home() {
           />
             :
             <input
-            type="text" id="error" class="bg-red-50 pl-10 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700
+            type="text" id="error" class="bg-red-50 pl-10 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 
              focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500" placeholder="Cannot be empty"
              onChange={(e) => {query = e.target.value; setSearchQuery(e.target.value);}}
           />
