@@ -1,6 +1,6 @@
 class FeedbacksController < ApplicationController
   # before_action :set_feedback, only: %i[ show update destroy ]
- skip_before_action :authorized, only: [:index, :create]
+ skip_before_action :authorized, only: [:index,:create]
   # GET /feedbacks
   # GET /feedbacks.json
   def index
