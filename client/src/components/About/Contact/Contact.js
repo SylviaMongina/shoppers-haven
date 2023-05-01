@@ -1,6 +1,7 @@
 import { Fragment, useState } from 'react'
 import { Popover, Transition } from '@headlessui/react'
 import { Bars3Icon, EnvelopeIcon, PhoneIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import Swal from 'sweetalert2'
 
 const navigation = [
   { name: 'Changelog', href: '#' },
@@ -117,6 +118,7 @@ export default function Contact() {
 
   const handleSubmit = (e)=>{
     e.preventDefault()
+    // e.target.reset(formData);
     fetch('/feedbacks', {
       method: 'POST',
       headers:{
@@ -125,8 +127,24 @@ export default function Contact() {
       body:JSON.stringify(formData),
     })
     .then(r => r.json())
-    .then(data => (console.log(data)))
-    console.log(formData)
+    .then(data => (setFormData(data)))
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Message sent!',
+      showConfirmButton: false,
+      timer: 1500
+    })
+  
+ 
+    setFormData({
+      first_name: "",
+      last_name:"",
+      email:"",
+      subject:"",
+      message:"",
+    })
+
 
   }
 console.log(formData)
@@ -346,6 +364,8 @@ console.log(formData)
                           autoComplete="given-name"
                           className="block w-full rounded-md border-warm-gray-300 py-2 px-2 text-warm-gray-900 shadow-sm focus:border-teal-500 focus:ring-teal-500"
                           onChange={handleChange}
+                          
+                          value={formData.first_name}
                         />
                       </div>
                     </div>
@@ -357,10 +377,12 @@ console.log(formData)
                         <input
                           type="text"
                           name="last_name"
+                          value={formData.last_name}
                           id="last-name"
                           autoComplete="family-name"
                           className="block w-full rounded-md border-warm-gray-300 py-2 px-4 text-warm-gray-900 shadow-sm focus:border-teal-500 focus:ring-teal-500"
                           onChange={handleChange}
+                         
                         />
                       </div>
                     </div>
@@ -371,11 +393,13 @@ console.log(formData)
                       <div className="mt-1">
                         <input
                           id="email"
+                          value={formData.email}
                           name="email"
                           type="email"
                           autoComplete="email"
                           className="block w-full rounded-md border-warm-gray-300 py-2 px-4 text-warm-gray-900 shadow-sm focus:border-teal-500 focus:ring-teal-500"
                           onChange={handleChange}
+                         
                         />
                       </div>
                     </div>
@@ -397,6 +421,8 @@ console.log(formData)
                           className="block w-full rounded-md border-warm-gray-300 py-2 px-4 text-warm-gray-900 shadow-sm focus:border-teal-500 focus:ring-teal-500"
                           aria-describedby="phone-optional"
                           onChange={handleChange}
+                          defaultValue={""}
+                          value={formData.phone}
                         />
                       </div>
                     </div>
@@ -411,6 +437,8 @@ console.log(formData)
                           id="subject"
                           className="block w-full rounded-md border-warm-gray-300 py-2 px-4 text-warm-gray-900 shadow-sm focus:border-teal-500 focus:ring-teal-500"
                           onChange={handleChange}
+                          defaultValue={""}
+                          
                         />
                       </div>
                     </div>
@@ -432,6 +460,7 @@ console.log(formData)
                           aria-describedby="message-max"
                           defaultValue={''}
                           onChange={handleChange}
+                          value={formData.message}
                         />
                       </div>
                     </div>
