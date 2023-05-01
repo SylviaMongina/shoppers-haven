@@ -11,15 +11,17 @@
 Shoppers haven is a platfrom that allows users to view products from various ecommerce websites such as Ebay,Amazon,Alibaba and Shopify.This allows the user to only review the products from the various sites,compare the marginal benefit and cost benefit then choose from the site that best suites the user.This is done through a link redirecting a user to the actual ecommerce site for purchase of that particular product.
 ## Screenshots 📸
 # A view of the landing page.
-
-# A view of the sort filter 
-
-# A view of the products
-
+![image](https://user-images.githubusercontent.com/117803357/235507797-1c7999dd-1465-4aff-81da-5414abac2a36.png)
 # A view of the signup page
 ![image](https://user-images.githubusercontent.com/117803357/235502027-04f251ba-43b1-4457-98c4-56d967b63601.png)
 # A view of the log in page
 ![image](https://user-images.githubusercontent.com/117803357/235502316-30009645-5dcc-4c88-a85a-50aa4e470fa0.png)
+# A view of the sort filter 
+
+![image](https://user-images.githubusercontent.com/117803357/235507435-5662a68a-5997-4802-9e44-28ed46216271.png)
+# A view of the products
+![image](https://user-images.githubusercontent.com/117803357/235507020-01c41f3d-126b-47f6-bc02-8c6129ceab16.png)
+
 
 # Core Deliverables
 As a user 👨‍💻, I can:
