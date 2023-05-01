@@ -1,9 +1,10 @@
 require_relative "boot"
 
-require 'dotenv/rails-now'
+# require 'dotenv/rails-now'
+
 
 require "rails"
-require 'sprockets/railtie'
+# require 'sprockets/railtie'
 require 'active_job'
 # Pick the frameworks you want:
 require "active_model/railtie"
@@ -36,4 +37,3 @@ module ShoppersHaven
     # config.action_cable.disable_request_forgery_protection = true
   end
 end
-
