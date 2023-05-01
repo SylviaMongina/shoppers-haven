@@ -1,5 +1,6 @@
 class SearchHistoriesController < ApplicationController
-  before_action :set_search_history, only: %i[ show update destroy ]
+  before_action :set_search_history, only: %i[ show create update destroy ]
+
 
   # GET /search_histories
   def index

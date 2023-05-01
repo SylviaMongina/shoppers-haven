@@ -12,6 +12,11 @@ gem "rails", "~> 7.0.4", ">= 7.0.4.3"
 gem "sprockets-rails"
 gem 'activejob'
 
+gem 'sendgrid-ruby'
+# gem 'dotenv-rails', groups: [:development, :test]
+gem 'actionmailer'
+
+
 # Use postgresql as the database for Active Record
 gem "pg", '1.4.6'
 
@@ -29,12 +34,15 @@ gem "stimulus-rails"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
+# gem 'dotenv-rails', groups: [:development, :test]
+gem 'dotenv-rails', '~> 2.7.6'
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
+
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 gem "bcrypt", "~> 3.1.7"
