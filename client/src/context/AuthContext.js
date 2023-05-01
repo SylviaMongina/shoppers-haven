@@ -44,7 +44,6 @@ function AuthProvider({children}){
                   })
                   setUser(data.user)
                   setLoggedIn(data.logged_in)
-                  console.log(data.logged_in)
                   navigate('/')
             }else {
                 Swal.fire({
@@ -75,7 +74,6 @@ function AuthProvider({children}){
                     title: 'Wrong credentials!',
                     text: data.errors[0],
                   })
-                  console.log(data.errors)
             }else if(data.user){
                 Swal.fire({
                     position: 'center',
@@ -109,7 +107,6 @@ function AuthProvider({children}){
         .then(response=>{
             setUser(response.user)
             setLoggedIn(response.logged_in)
-            console.log(response.user)
         }
         )
     }, [token])
@@ -140,7 +137,8 @@ function AuthProvider({children}){
         signup,
         loggedIn,
         handleSignOut,
-        user
+        user,
+        token
       }
 
     return (

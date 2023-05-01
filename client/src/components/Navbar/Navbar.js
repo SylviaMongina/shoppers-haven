@@ -8,6 +8,7 @@ import { AuthContext } from '../../context/AuthContext'
 import DotLoader from "react-spinners/DotLoader";
 import Modal from 'react-bootstrap/Modal';
 
+
 export default function Navbar() {
     const [current] = useState(false)
     const [fullscreen, setFullscreen] = useState(true);
@@ -52,6 +53,7 @@ export default function Navbar() {
          
     }
 
+console.log(searches)
 
   return (
     <div>
@@ -60,7 +62,7 @@ export default function Navbar() {
             <>
                 <div className="mx-3 max-w-full px-2 sm:px-6 lg:px-8">
                     <div className="relative flex h-20 items-center justify-between">
-                        <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+                                    <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                             {/* Mobile menu button*/}
                             <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                             <span className="sr-only">Open main menu</span>
@@ -89,6 +91,7 @@ export default function Navbar() {
                                 {navigation.map((item) => (
                                 <a
                                     key={item.name}
+                                    // onClick={()=>setCurrent(!current)}
                                     style = {{textDecoration: "none"  }}
                                     href={item.href}
                                     className={classNames(
@@ -220,7 +223,8 @@ export default function Navbar() {
                     {searches?.map((search) => (
                         <li key={search.id} className="flex py-4">
                         <div className="ml-1">
-                            <p className="text-sm font-medium text-gray-900 mb-0">{search.query}</p>
+                            {/* <p className="text-sm font-medium text-gray-900 mb-0" onClick={()=>handleClickSearch}>{search.query}</p> */}
+                            <button className="text-sm font-medium text-gray-900 mb-0"  >{search.query}</button>
                         </div>
                         </li>
                     ))}

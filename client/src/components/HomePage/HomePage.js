@@ -6,10 +6,9 @@ import { AuthContext } from '../../context/AuthContext'
 
 export let query = ""
 
-
 function Home() {
   const navigate = useNavigate()
-  const {token} = useContext(AuthContext)
+  const {token, user} = useContext(AuthContext)
   const [searchQuery, setSearchQuery] = useState("")
   
 
@@ -22,7 +21,8 @@ function Home() {
         "Authorization": `Bearer ${token}`
       },
       body: JSON.stringify({
-        query: searchQuery
+        query: searchQuery,
+        user_id: user.id
       })
     })
     navigate('/search')
@@ -51,6 +51,7 @@ function Home() {
           </div>
           <div>
           <MagnifyingGlassIcon onClick={() => handleSearch()} className="p-2 ml-5 text-white search-button cursor-pointer" aria-hidden="true" />
+
           </div>
         </div>
       </div>
@@ -72,3 +73,5 @@ function Home() {
 }
 
 export default Home
+
+
