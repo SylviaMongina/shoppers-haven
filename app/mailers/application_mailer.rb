@@ -1,6 +1,7 @@
 require 'action_mailer'
 
 class ApplicationMailer < ActionMailer::Base
-  default from: 'ochiengolu@gmail.com'
+  default from: 'dennomaz@gmail.com'
+  
   layout 'mailer'
 end
