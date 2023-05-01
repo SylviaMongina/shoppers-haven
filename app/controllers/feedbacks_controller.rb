@@ -23,6 +23,7 @@ def create
     if @feedback.save
       # send feedback email
       FeedbackMailer.send_feedback_email(@feedback.email).deliver_now 
+      render json: @feedback, status: :ok
     else
       render :new
     end
