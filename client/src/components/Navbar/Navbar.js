@@ -5,19 +5,12 @@ import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../context/AuthContext'
-import DotLoader from "react-spinners/DotLoader";
-import Modal from 'react-bootstrap/Modal';
 export let query = "";
 
 
 export default function Navbar() {
     const [current] = useState(false)
-    const [fullscreen, setFullscreen] = useState(true);
-    const [show, setShow] = useState(false);
-    const [searches, setSearches] = useState([]);
-    const [loading, setLoading] = useState(false)
-
-    const { handleSignOut, loggedIn, user, token} = useContext(AuthContext)
+    const { handleSignOut, loggedIn, user} = useContext(AuthContext)
     
     const navigate = useNavigate()
    
@@ -27,31 +20,9 @@ export default function Navbar() {
     ]
 
     function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
+        return classes.filter(Boolean).join(' ')
     }
 
-    function handleShow(breakpoint) {
-        setFullscreen(breakpoint);
-        setShow(true);
-    }
-
-    function fetchSearches() {
-        setLoading(true)
-        fetch('search_histories',{
-            method: 'GET',
-            headers: {
-                "Authorization": `Bearer ${token}`
-            }
-        })
-         .then(r => r.json())
-         .then(data => {
-            setTimeout(() => {
-                setLoading(false)
-              }, 1000)
-            setSearches(data)
-        })
-         
-    }
 
   return (
     <div>
@@ -145,16 +116,6 @@ export default function Navbar() {
                                     </button>
                                     )}
                                 </Menu.Item>
-                                <Menu.Item>
-                                    {({ active }) => (
-                                    <button
-                                        className={`${classNames(active ? 'bg-gray-100 w-full' : '', 'block px-4 py-2 text-sm text-gray-700')} no-underline`}
-                                        onClick={() => {handleShow(); fetchSearches()}}
-                                    >
-                                        Search history
-                                    </button>
-                                    )}
-                                </Menu.Item>
                                 </Menu.Items>
                                     </Transition>
                                 </div>
@@ -198,38 +159,7 @@ export default function Navbar() {
             </>
         )}
       </Disclosure>
-      <Modal show={show} fullscreen={fullscreen} onHide={() => setShow(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title className='text-lg text-center'>Your Search History</Modal.Title>
-        </Modal.Header>
-        {
-            loading ? (
-                <div className='loading-screen'>
-                    <DotLoader
-                        color={"#14B8A6"}
-                        loading={loading}
-                        size={40}
-                        aria-label="Loading Spinner"
-                        data-testid="loader"
-                    />
-                    <h1 className='mt-5'>Loading ...</h1>
-                </div> 
-            ) 
-            : 
-            (
-                 <ul className="divide-y divide-gray-200 pb-0">
-                    {searches?.map((search) => (
-                        <li key={search.id} className="flex py-4">
-                        <div className="ml-1">
-                            {/* <p className="text-sm font-medium text-gray-900 mb-0" onClick={()=>handleClickSearch}>{search.query}</p> */}
-                            <button className="text-sm font-medium text-gray-900 mb-0"  >{search.query}</button>
-                        </div>
-                        </li>
-                    ))}
-                </ul> 
-            ) 
-        }
-      </Modal>
+
       
     </div>
   )

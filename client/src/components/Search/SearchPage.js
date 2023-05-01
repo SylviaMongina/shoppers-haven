@@ -5,10 +5,11 @@ import { Menu, Transition, Listbox } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import DotLoader from "react-spinners/DotLoader";
 import './search.css'
+import { Modal } from 'react-bootstrap'
 import Paginate from './Paginate'
 import { query } from '../HomePage/HomePage'
 import { ProductContext } from '../../context/ProductContext'
-import FilterProducts from './FilterProducts'
+// import FilterProducts from './FilterProducts'
 import { AuthContext } from '../../context/AuthContext'
 
 
@@ -29,60 +30,94 @@ function classNames(...classes) {
 
 
 function SearchPage() {
-  // const {products} = useContext(ProductContext)
-  const { productState:{delivery_cost , searchQuery, sort}, productDispatch } = useContext(ProductContext)
+  const { productState:{delivery_cost , sort}, productDispatch } = useContext(ProductContext)
   const [loading, setLoading] = useState(false)
   const [products, setProducts] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
   const [productsPerPage] = useState(5)
   const indexOfLastShipment = currentPage * productsPerPage //5
   const indexOfFirstShipment = indexOfLastShipment - productsPerPage //0
-  // const currentProducts = products?.slice(indexOfFirstShipment , indexOfLastShipment)
   const {user, token} = useContext(AuthContext)
   const [selected, setSelected] = useState(relevance[3])
-  
+  const [searches, setSearches] = useState([]);
+  const [searchHistory, setSearchHistory] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [show, setShow] = useState(false);
 
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
-  useEffect(() => {
-    setLoading(true)
-    setTimeout(() => {
-      setLoading(false)
-    }, 500)
-  }, [])
 
   useEffect(() => {
+    // setLoading(true)
     fetch(`/products?search=${query}`,{
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
       },
     })
     .then(r => r.json())
     .then((data) => setProducts(data))
-  }, [sort])
+    // setTimeout(() => {
+    //   setLoading(false)
+    // }, 1500)
+  }, [])
+
+  
+  function handleSearch() {
+    setLoading(true)
+    if(user){
+      fetch('/search_histories', {
+        method: 'POST',
+        headers: {
+          "Accept": 'application/json',
+          "Content-Type": 'application/json',
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          query: searchQuery,
+          user_id: user.id
+        })
+      })
+    }
+
+    fetch(`/products?search=${searchQuery}`,{
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(r => r.json())
+    .then((data) => {
+      setProducts(data)
+      setTimeout(() => {
+        setLoading(false)
+      }, 1500)
+    })
+  }
 
 
   const transformProducts = () => {
     let sortedProducts = products;
     
 
-    if (sort) {
+    if ( sort === "lowToHigh") {
       sortedProducts = sortedProducts.sort((a, b) =>
-        sort === "lowToHigh" ? a.price - b.price : b.price - a.price
-      );
-    }
-    if (delivery_cost) {
-      sortedProducts = sortedProducts.sort((a, b) =>
-        delivery_cost === "lowToHigh" ? a.delivery_cost - b.delivery_cost : b.delivery_cost - a.delivery_cost
+         a.price - b.price
       );
     }
 
-    if (searchQuery) {
-      sortedProducts = sortedProducts.filter((prod) =>
-        prod.name.toLowerCase().includes(searchQuery)
+    if (sort === "highToLow") {
+      sortedProducts = sortedProducts.sort((a, b) =>
+         b.price - a.price
+      );
+    }
+
+    if (delivery_cost) {
+      sortedProducts = sortedProducts.sort((a, b) =>
+        a.delivery_cost - b.delivery_cost
       );
     }
     
@@ -90,6 +125,17 @@ function SearchPage() {
 
     
   };
+
+  function fetchSearches(){
+      fetch('/search_histories', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      .then(r => r.json())
+      .then(data => setSearches(data))
+  }
 
 
   return (
@@ -120,23 +166,30 @@ function SearchPage() {
                 <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                 <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
                 </div>
-                <input
+                {
+                  searchQuery ? 
+                  <input
                 id="search"
                 name="search"
                 className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-10 pr-3 text-lg placeholder-gray-500 focus:border-green-500 focus:text-gray-900 focus:placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-green-500 sm:text-sm"
                 placeholder="Search"
                 type="search"
-                // onChange={(e) => query = e.target.value}
-                onChange={(e) => {
-                  productDispatch({
-                    type: "FILTER_BY_SEARCH",
-                    payload: e.target.value,
-                  });
-                }}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 />
+                :
+                <input
+                  type="text" id="error" class="bg-red-50 pl-10 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700
+                   focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500" placeholder="Cannot be empty"
+                   onChange={(e) => {setSearchQuery(e.target.value);}}
+                />
+              }
             </div>
-            <div>
-                <MagnifyingGlassIcon className="p-2 mx-2 text-white search-button cursor-pointer" aria-hidden="true" />
+            <div>{
+              searchQuery ? 
+                <MagnifyingGlassIcon onClick={() => handleSearch()} className="p-2 mx-2 text-white search-button cursor-pointer" aria-hidden="true" /> 
+                :
+                <MagnifyingGlassIcon className="p-2 ml-5 text-white search-button cursor-pointer cursor-not-allowed" aria-hidden="true" />
+                }
             </div>
         </div>
         <Menu as="div" className="relative inline-block text-left">
@@ -165,8 +218,8 @@ function SearchPage() {
                         className={classNames(
                             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                             'block w-full px-4 py-2 text-left text-sm'
-                        )}
-                        
+                        )}     
+                        onClick={() => {handleShow(); fetchSearches();}}                   
                         >
                         Your searches
                         </button>
@@ -189,169 +242,169 @@ function SearchPage() {
           </Transition>
         </Menu>
         <div className="top-16 w-72">
-      <Listbox value={selected} onChange={setSelected}>
-        <div className="relative mt-1 ">
-          <Listbox.Button className="relative w-full cursor-default rounded-lg bg-teal-500 text-white font-medium py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
-            <span className="block truncate">{selected.name}</span>
-            <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-              <ChevronUpDownIcon
-                className="h-6 w-6 text-gray-1000"
-                aria-hidden="true"
-              />
-            </span>
-          </Listbox.Button>
-          <Transition
-            as={Fragment}
-            leave="transition ease-in duration-100"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-              {/* {people.map((person, personIdx) => ( */}
-                <Listbox.Option
-                
-                  className={({ active }) =>
-                    `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                      active ? 'bg-teal-100 text-teal-300' : 'text-gray-900'
-                    }`
-                  }
-                  value={relevance[0]}
-                  name="Price High-Low"
-                  onClick={() =>
-                    productDispatch({
-                      type: "SORT_BY_PRICE",
-                      payload: "highToLow" ,
-                      
-                    })}
-                                             
-                >
-                  {({ selected }) => (
-                    <>
-                      <span
-                        className={`block truncate ${
-                          selected ? 'font-medium' : 'font-normal'
-                        }`}
-                      >
-                        {relevance[0].name}
-                        
-                      </span>
-                      {selected ? (
-                        <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-teal-300">
-                          <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                        </span>
-                      ) : null}
-                    </>
-                  )}
-                </Listbox.Option>
-                <Listbox.Option
-                
-                className={({ active }) =>
-                  `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                    active ? 'bg-teal-100 text-teal-300' : 'text-gray-900'
-                  }`
-                }
-                value={relevance[1]}
-                name="Price Low-High"
-                onClick={() =>
-                  productDispatch({
-                    type: "SORT_BY_PRICE",
-                    payload: "lowToHigh",
-                  })
-                }
-                                            
+          <Listbox className="" value={selected} onChange={setSelected}>
+            <div className="relative mt-1 ">
+              <Listbox.Button className="relative w-full cursor-default rounded-lg bg-teal-500 text-white font-medium py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
+                <span className="block truncate">{selected.name}</span>
+                <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                  <ChevronUpDownIcon
+                    className="h-6 w-6 text-gray-1000"
+                    aria-hidden="true"
+                  />
+                </span>
+              </Listbox.Button>
+              <Transition
+                as={Fragment}
+                leave="transition ease-in duration-100"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
               >
-                {({ selected }) => (
-                  <>
-                    <span
-                      className={`block truncate ${
-                        selected ? 'font-medium' : 'font-normal'
-                      }`}
+                <Listbox.Options className="p-0 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                  {/* {people.map((search, searchIdx) => ( */}
+                    <Listbox.Option
+                    
+                      className={({ active }) =>
+                        `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                          active ? 'bg-teal-100' : 'text-gray-900'
+                        }`
+                      }
+                      value={relevance[0]}
+                      name="Price High-Low"
+                      onClick={() =>
+                        productDispatch({
+                          type: "SORT_BY_PRICE",
+                          payload: "highToLow" ,
+                          
+                        })}
+                                                  
                     >
-                      {relevance[1].name}
-                      
-                    </span>
-                    {selected ? (
-                      <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-teal-300">
-                        <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                      </span>
-                    ) : null}
-                  </>
-                )}
-              </Listbox.Option>
+                      {({ selected }) => (
+                        <>
+                          <span
+                            className={`block truncate ${
+                              selected ? 'font-medium' : 'font-normal'
+                            }`}
+                          >
+                            {relevance[0].name}
+                            
+                          </span>
+                          {selected ? (
+                            <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-teal-300">
+                              <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                            </span>
+                          ) : null}
+                        </>
+                      )}
+                    </Listbox.Option>
+                    <Listbox.Option
+                    
+                    className={({ active }) =>
+                      `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                        active ? 'bg-teal-100' : 'text-gray-900'
+                      }`
+                    }
+                    value={relevance[1]}
+                    name="Price Low-High"
+                    onClick={() =>
+                      productDispatch({
+                        type: "SORT_BY_PRICE",
+                        payload: "lowToHigh",
+                      })
+                    }
+                                                
+                  >
+                    {({ selected }) => (
+                      <>
+                        <span
+                          className={`block truncate ${
+                            selected ? 'font-medium' : 'font-normal'
+                          }`}
+                        >
+                          {relevance[1].name}
+                          
+                        </span>
+                        {selected ? (
+                          <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-teal-300">
+                            <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                          </span>
+                        ) : null}
+                      </>
+                    )}
+                  </Listbox.Option>
 
-              <Listbox.Option
-                
-                  className={({ active }) =>
-                    `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                      active ? 'bg-teal-100 text-teal-300' : 'text-gray-900'
-                    }`
-                  }
-                  value={relevance[2]}
-                  name=" Delivery Cost"
-                  onClick={() =>
-                    productDispatch({
-                      type: "FILTER_BY_DELIVERY_COST",
-                      payload: "lowToHigh",
-                    })
-                  }
-                                              
-                >
-                  {({ selected }) => (
-                    <>
-                      <span
-                        className={`block truncate ${
-                          selected ? 'font-medium' : 'font-normal'
-                        }`}
-                      >
-                        {relevance[2].name}
-                       
-                      </span>
-                      {selected ? (
-                        <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-teal-300">
-                          <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                        </span>
-                      ) : null}
-                    </>
-                  )}
-                </Listbox.Option>
-                <Listbox.Option
-                  
-                  className={({ active }) =>
-                    `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                      active ? 'bg-teal-100 text-teal-300' : 'text-gray-900'
-                    }`
-                  }
-                  value={relevance[3]}
-                  name="Clear Filter"
-                  onClick={() =>
-                    productDispatch({
-                      type: "CLEAR_FILTERS",
-                    })
-                  }
-                >
-                  {({ selected }) => (
-                    <>
-                      <span
-                        className={`block truncate ${
-                          selected ? 'font-medium' : 'font-normal'
-                        }`}
-                      >
-                        {relevance[3].name}
-                       
-                      </span>
-                      {selected ? (
-                        <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-teal-300">
-                          <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                        </span>
-                      ) : null}
-                    </>
-                  )}
-                </Listbox.Option>            
-            </Listbox.Options>
-          </Transition>
+                  <Listbox.Option
+                    
+                      className={({ active }) =>
+                        `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                          active ? 'bg-teal-100' : 'text-gray-900'
+                        }`
+                      }
+                      value={relevance[2]}
+                      name=" Delivery Cost"
+                      onClick={() =>
+                        productDispatch({
+                          type: "FILTER_BY_DELIVERY_COST",
+                          payload: "lowToHighDispatch",
+                        })
+                      }
+                                                  
+                    >
+                      {({ selected }) => (
+                        <>
+                          <span
+                            className={`block truncate ${
+                              selected ? 'font-medium' : 'font-normal'
+                            }`}
+                          >
+                            {relevance[2].name}
+                            
+                          </span>
+                          {selected ? (
+                            <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-teal-300">
+                              <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                            </span>
+                          ) : null}
+                        </>
+                      )}
+                    </Listbox.Option>
+                    <Listbox.Option
+                      
+                      className={({ active }) =>
+                        `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                          active ? 'bg-teal-100' : 'text-gray-900'
+                        }`
+                      }
+                      value={relevance[3]}
+                      name="Clear Filter"
+                      onClick={() =>
+                        productDispatch({
+                          type: "CLEAR_FILTERS",
+                        })
+                      }
+                    >
+                      {({ selected }) => (
+                        <>
+                          <span
+                            className={`block truncate ${
+                              selected ? 'font-medium' : 'font-normal'
+                            }`}
+                          >
+                            {relevance[3].name}
+                            
+                          </span>
+                          {selected ? (
+                            <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-teal-300">
+                              <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                            </span>
+                          ) : null}
+                        </>
+                      )}
+                    </Listbox.Option>            
+                </Listbox.Options>
+              </Transition>
+            </div>
+          </Listbox>
         </div>
-      </Listbox>
-    </div>
       </div>
       <div className="bg-white">
         <div className="mx-auto w-9/12 py-3 px-4 sm:py-24 sm:px-6 lg:px-0">
@@ -374,7 +427,7 @@ function SearchPage() {
                                 <div className="ml-4 flex flex-1 flex-col sm:ml-6">
                                     <div>
                                     <div className="flex justify-between">
-                                        <h4 className="text-sm">
+                                        <h4 className="text">
                                             {product.name}
                                         </h4>
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
@@ -390,12 +443,12 @@ function SearchPage() {
                                     </div>
 
                                     <div className="flex flex-1 items-end justify-between">
-                                        <p className="text-sm font-medium hover:text-indigo-500">
+                                        <p className="text-2xl font-medium ">
                                         <span>Price: ${product.price}</span>
                                         </p>
                                     </div>
                                     <div className="flex flex-1 items-end justify-between">
-                                        <p className="text-sm font-medium hover:text-indigo-500">
+                                        <p className="text-sm font-medium">
                                         <span>Delivery Cost: ${product.delivery_cost}</span>
                                         </p>
                                     </div>
@@ -405,12 +458,27 @@ function SearchPage() {
                     </ul>
                 </section>
             </div>
-            {/* <Paginate productsPerPage={productsPerPage} totalProducts={products.length} paginate={paginate} /> */}
             <Paginate productsPerPage={productsPerPage} totalProducts={transformProducts().length} paginate={paginate} />
 
         </div>
       </div>
-    </div>)
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Your Search History</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        <ul className="divide-y divide-gray-100">
+          {searches.map((search) => (
+            <li key={search.id} className="flex justify-between py-3">
+              <button className="mt-0 truncate text-xl leading-5">{search.query}</button>
+            </li>
+          ))}
+        </ul>
+        </Modal.Body>
+      </Modal>
+    </div>
+    
+    )
     }
     </div>
   )
