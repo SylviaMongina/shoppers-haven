@@ -9,7 +9,7 @@ const productReducer = (state, action) => {
       case "FILTER_BY_SEARCH":
         return { ...state, searchQuery: action.payload };
       case "CLEAR_FILTERS":
-        return {  delivery_cost:"", sort:false, searchQuery:"" };
+        return {  delivery_cost:false, sort:false, searchQuery:"" };
       default:
         return state;
     }
