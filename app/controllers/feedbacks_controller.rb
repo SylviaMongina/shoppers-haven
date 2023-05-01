@@ -28,7 +28,12 @@ def create
     end
   end
 
+# def create
 
+#   feedback = Feedback.create!(feedback_params)
+#   FeedbackMailer.send_feedback_email(@feedback.email).deliver_now 
+#   render json: feedback
+# end
 
 
   # PATCH/PUT /feedbacks/1
@@ -55,7 +60,8 @@ def create
 
     # Only allow a list of trusted parameters through.
     def feedback_params
-      params.require(:feedback).permit(:first_name, :last_name, :email, :phone, :subject, :message)
+      params.permit(:first_name, :last_name, :email, :subject, :message)
     end
     
 end
+# .require(:feedback)
