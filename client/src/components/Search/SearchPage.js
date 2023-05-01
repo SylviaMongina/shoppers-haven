@@ -6,7 +6,6 @@ import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import DotLoader from "react-spinners/DotLoader";
 import './search.css'
 import Paginate from './Paginate'
-import { AuthContext } from '../../context/AuthContext'
 import { query } from '../HomePage/HomePage'
 import { ProductContext } from '../../context/ProductContext'
 import FilterProducts from './FilterProducts'
@@ -29,13 +28,11 @@ function classNames(...classes) {
 }
 
 
-
 function SearchPage() {
   // const {products} = useContext(ProductContext)
   const { productState:{delivery_cost , searchQuery, sort}, productDispatch } = useContext(ProductContext)
   const [loading, setLoading] = useState(false)
   const [products, setProducts] = useState([])
-  const [search, setSearch] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [productsPerPage] = useState(5)
   const indexOfLastShipment = currentPage * productsPerPage //5
@@ -47,13 +44,12 @@ function SearchPage() {
 
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber)
-  
-  
+
   useEffect(() => {
     setLoading(true)
     setTimeout(() => {
       setLoading(false)
-    }, 2000)
+    }, 500)
   }, [])
 
   useEffect(() => {
@@ -68,7 +64,7 @@ function SearchPage() {
     .then((data) => setProducts(data))
   }, [sort])
 
-  
+
   const transformProducts = () => {
     let sortedProducts = products;
     
@@ -140,9 +136,58 @@ function SearchPage() {
                 />
             </div>
             <div>
-                <MagnifyingGlassIcon onClick={handleSearch} className="p-2 mx-2 text-white search-button cursor-pointer" aria-hidden="true" />
+                <MagnifyingGlassIcon className="p-2 mx-2 text-white search-button cursor-pointer" aria-hidden="true" />
             </div>
         </div>
+        <Menu as="div" className="relative inline-block text-left">
+          <div>
+            {/* <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-teal-500 text-white p-3 text-sm font-semibold text-gray-900 shadow ring-1 ring-inset ring-gray-300 hover:bg-gray-50"> */}
+            <Menu.Button className="relative w-full cursor-default rounded-lg bg-teal-500 text-white font-medium py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
+
+            Search
+            <ChevronDownIcon className="-mr-1 h-5 w-5 text-gray-1000" aria-hidden="true" />
+            </Menu.Button>
+          </div>
+          <Transition
+                as={Fragment}
+                enter="transition ease-out duration-100"
+                enterFrom="transform opacity-0 scale-95"
+                enterTo="transform opacity-100 scale-100"
+                leave="transition ease-in duration-75"
+                leaveFrom="transform opacity-100 scale-100"
+                leaveTo="transform opacity-0 scale-95"
+            >
+                <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <div className="py-1">
+                    <Menu.Item>
+                    {({ active }) => (
+                        <button
+                        className={classNames(
+                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                            'block w-full px-4 py-2 text-left text-sm'
+                        )}
+                        
+                        >
+                        Your searches
+                        </button>
+                    )}
+                    </Menu.Item>
+                    <Menu.Item>
+                    {({ active }) => (
+                        <button
+                        className={classNames(
+                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                            'block w-full px-4 py-2 text-left text-sm'
+                        )}
+                        >
+                        Popular Searches
+                        </button>
+                    )}
+                    </Menu.Item>
+                </div>
+                </Menu.Items>
+          </Transition>
+        </Menu>
         <div className="top-16 w-72">
       <Listbox value={selected} onChange={setSelected}>
         <div className="relative mt-1 ">
@@ -310,7 +355,7 @@ function SearchPage() {
       </div>
       <div className="bg-white">
         <div className="mx-auto w-9/12 py-3 px-4 sm:py-24 sm:px-6 lg:px-0">
-            <h1 className="text-center text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Your Search Results</h1>
+            <h1 className="text-center text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Results</h1>
             <div className="mt-12 w-full">
                 <section aria-labelledby="cart-heading">
                     <h2 id="cart-heading" className="sr-only">
@@ -332,13 +377,20 @@ function SearchPage() {
                                         <h4 className="text-sm">
                                             {product.name}
                                         </h4>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
+  <path d="M9.653 16.915l-.005-.003-.019-.01a20.759 20.759 0 01-1.162-.682 22.045 22.045 0 01-2.582-1.9C4.045 12.733 2 10.352 2 7.5a4.5 4.5 0 018-2.828A4.5 4.5 0 0118 7.5c0 2.852-2.044 5.233-3.885 6.82a22.049 22.049 0 01-3.744 2.582l-.019.01-.005.003h-.002a.739.739 0 01-.69.001l-.002-.001z" />
+</svg>
                                         <a target='blank' href={product.website_url} className="ml-4 text-white font-medium no-underline px-4 py-2 rounded button shadow">Go to Store</a>
+                                        
+
                                     </div>
                                     <p className="mt-0 text-lg">From {product.website_name}</p>
+                                    <p className="mt-1 text-sm text-gray-500">{product.color}</p>
+                                    <p className="mt-1 text-sm text-gray-500">{product.size}</p>
                                     </div>
 
                                     <div className="flex flex-1 items-end justify-between">
-                                        <p className="text-3xl font-medium hover:text-indigo-500">
+                                        <p className="text-sm font-medium hover:text-indigo-500">
                                         <span>Price: ${product.price}</span>
                                         </p>
                                     </div>
@@ -365,104 +417,3 @@ function SearchPage() {
 }
 
 export default SearchPage
-
-
-
-
-// {/* <Menu as="div" className="relative inline-block text-left">
-//           <div>
-//             <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white p-3 text-sm font-semibold text-gray-900 shadow ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-//             Sort By
-//             <ChevronDownIcon className="-mr-1 h-5 w-5 text-gray-400" aria-hidden="true" />
-//             </Menu.Button>
-//           </div>
-//           <Transition
-//                 as={Fragment}
-//                 enter="transition ease-out duration-100"
-//                 enterFrom="transform opacity-0 scale-95"
-//                 enterTo="transform opacity-100 scale-100"
-//                 leave="transition ease-in duration-75"
-//                 leaveFrom="transform opacity-100 scale-100"
-//                 leaveTo="transform opacity-0 scale-95"
-//             >
-//                 <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-//                 <div className="py-1">
-//                     <Menu.Item>
-//                       {/* active = sort === "lowToHigh" ? true : false */}
-//                     {({ active }) => (
-//                         <button
-//                         className={classNames(
-//                             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-//                             'block w-full px-4 py-2 text-left text-sm'
-//                         )}
-//                         onClick={() =>
-//                           productDispatch({
-//                             type: "SORT_BY_PRICE",
-//                             payload: "highToLow" ,
-                            
-//                           })
-//                       // onChange={}
-//                         }
-//                         >
-//                         Price High-Low
-//                         </button>
-//                     )}
-//                     </Menu.Item>
-//                     <Menu.Item>
-//                     {({ active }) => (
-//                         <button
-//                         className={classNames(
-//                             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-//                             'block w-full px-4 py-2 text-left text-sm'
-//                         )}
-
-//                         onClick={() =>
-//                           productDispatch({
-//                             type: "SORT_BY_PRICE",
-//                             payload: "lowToHigh",
-//                           })
-//                         }
-//                         >
-//                         Price Low-high
-//                         </button>
-//                     )}
-//                     </Menu.Item>
-//                     <Menu.Item>
-//                     {({ active }) => (
-//                         <button
-//                         className={classNames(
-//                             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-//                             'block w-full px-4 py-2 text-left text-sm'
-//                         )}
-//                         onClick={() =>
-//                           productDispatch({
-//                             type: "FILTER_BY_DELIVERY_COST",
-//                             payload: "lowToHigh",
-//                           })
-//                         }
-//                         >
-//                         Relevance/delivery_cost
-//                         </button>
-//                     )}
-//                     </Menu.Item>
-//                     <Menu.Item>
-//                     {({ active }) => (
-//                         <button
-//                         className={classNames(
-//                             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-//                             'block w-full px-4 py-2 text-left text-sm'
-//                         )}
-//                         onClick={() =>
-//                           productDispatch({
-//                             type: "CLEAR_FILTERS",
-//                           })
-//                         }
-//                         >
-//                         Clear filters
-//                         </button>
-//                     )}
-//                     </Menu.Item>
-//                 </div>
-//                 </Menu.Items>
-//           </Transition>
-//         </Menu> */}

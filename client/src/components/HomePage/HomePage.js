@@ -8,7 +8,7 @@ export let query = ""
 
 function Home() {
   const navigate = useNavigate()
-  const {token} = useContext(AuthContext)
+  const {token, user} = useContext(AuthContext)
   const [searchQuery, setSearchQuery] = useState("")
   
 
@@ -21,7 +21,8 @@ function Home() {
         "Authorization": `Bearer ${token}`
       },
       body: JSON.stringify({
-        query: searchQuery
+        query: searchQuery,
+        user_id: user.id
       })
     })
     navigate('/search')
