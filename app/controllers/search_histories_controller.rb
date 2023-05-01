@@ -1,5 +1,5 @@
 class SearchHistoriesController < ApplicationController
-  before_action :set_search_history, only: %i[ show create update destroy ]
+  # before_action :set_search_history, only: %i[ show create update destroy ]
 
 
   # GET /search_histories
@@ -48,7 +48,7 @@ end
 
     # Only allow a list of trusted parameters through.
    def search_history_params
-  params.require(:search_history).permit(:query, :user_id)
+  params.permit(:query, :user_id)
 end
 end
 # require(:search_history).
