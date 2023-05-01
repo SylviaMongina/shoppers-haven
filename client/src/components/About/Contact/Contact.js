@@ -2,8 +2,6 @@ import { useState } from 'react'
 import { EnvelopeIcon, PhoneIcon } from '@heroicons/react/24/outline'
 import Swal from 'sweetalert2'
 
-
-
 export default function Contact() {
 
   const [formData, setFormData] = useState({})
@@ -23,7 +21,7 @@ export default function Contact() {
         "Content-Type": "application/json"
       },
       body:JSON.stringify(formData),
-    }) 
+    })
     Swal.fire({
       position: 'center',
       icon: 'success',
@@ -314,6 +312,7 @@ export default function Contact() {
                           className="block w-full rounded-md border-warm-gray-300 py-2 px-4 text-warm-gray-900 shadow-sm focus:border-teal-500 focus:ring-teal-500"
                           aria-describedby="phone-optional"
                           onChange={handleChange}
+                          defaultValue={""}
                           value={formData.phone}
                         />
                       </div>
@@ -329,7 +328,8 @@ export default function Contact() {
                           id="subject"
                           className="block w-full rounded-md border-warm-gray-300 py-2 px-4 text-warm-gray-900 shadow-sm focus:border-teal-500 focus:ring-teal-500"
                           onChange={handleChange}
-                          value={formData.subject}                          
+                          defaultValue={""}
+                          
                         />
                       </div>
                     </div>
@@ -349,7 +349,7 @@ export default function Contact() {
                           rows={4}
                           className="block w-full rounded-md border-warm-gray-300 py-2 px-4 text-warm-gray-900 shadow-sm focus:border-teal-500 focus:ring-teal-500"
                           aria-describedby="message-max"
-                          defaultValue={''}
+                         
                           onChange={handleChange}
                           value={formData.message}
                         />
