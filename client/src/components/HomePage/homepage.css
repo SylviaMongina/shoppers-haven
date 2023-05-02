@@ -28,7 +28,8 @@
     }
 
     .what-we-do {
-        width: 70%;
+        margin: 10%;
+        width: auto;
     }
 
     .right-rectangle {
@@ -36,19 +37,26 @@
     }
 }
 
+@media (width >= 1000px) {
+    .left-rectangle {
+        top: 145vh;
+        z-index: 2;
+    }
+}
+
 .left-rectangle {
-    height: 400px;
+    height: 200px;
     width: 300px;
     background-color: #14B8A6;
     border-radius: 10px;
     position: absolute;
-    bottom: -95vh;
+    bottom: -80vh;
     left: 50px;
     z-index: -1;
 }
 
 .right-rectangle {
-    height: 400px;
+    height: 200px;
     width: 300px;
     background-color: #14B8A6;
     border-radius: 10px;
@@ -68,3 +76,8 @@
     background-color: #14B8A6;
     border-radius: 50%;
 }
+
+.required:after {
+    content:" *";
+    color: red;
+  }

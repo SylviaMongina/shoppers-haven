@@ -9,7 +9,7 @@ const AuthContext = createContext()
 function AuthProvider({children}){
 
     const [user, setUser] = useState()
-    const [loggedIn, setLoggedIn] = useState(false)
+    const [loggedIn, setLoggedIn] = useState()
 
     const navigate = useNavigate()
 
@@ -26,6 +26,7 @@ function AuthProvider({children}){
           .then(res => res.json())
           .then(data => {
             localStorage.setItem("jwt", data.jwt);
+            
             if (data.errors){
                 Swal.fire({
                     icon: 'error',
@@ -41,7 +42,8 @@ function AuthProvider({children}){
                     showConfirmButton: false,
                     timer: 1500
                   })
-                  setLoggedIn(true)
+                  setUser(data.user)
+                  setLoggedIn(data.logged_in)
                   navigate('/')
             }else {
                 Swal.fire({
@@ -72,7 +74,6 @@ function AuthProvider({children}){
                     title: 'Wrong credentials!',
                     text: data.errors[0],
                   })
-                  console.log(data.errors)
             }else if(data.user){
                 Swal.fire({
                     position: 'center',
@@ -104,17 +105,40 @@ function AuthProvider({children}){
         )
         .then(res=>res.json())
         .then(response=>{
-            setUser(response)
+            setUser(response.user)
+            setLoggedIn(response.logged_in)
         }
         )
-    }, [loggedIn])
+    }, [token])
+
+    //logout
+    function handleSignOut(e) {
+        fetch("/logout",{
+            method: "DELETE"
+        })
+        .then(response=>{
+            // localStorage.setItem("jwt", null)
+            localStorage.removeItem("jwt")
+            setLoggedIn(false)
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'LoggedOut successfully!',
+                showConfirmButton: false,
+                timer: 3000
+              })
+              navigate("/login")
+        })
+    }
+
 
       const contextData = {
         login,
         signup,
-        user,
-        setLoggedIn,
         loggedIn,
+        handleSignOut,
+        user,
+        token
       }
 
     return (
