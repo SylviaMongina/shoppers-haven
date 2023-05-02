@@ -2,11 +2,11 @@ require 'sendgrid-ruby'
 include SendGrid
 class FeedbackMailer < ApplicationMailer
  def send_feedback_email(email)
-   from = SendGrid::Email.new(email: 'shopersshaven@gmail.com')
+   from = SendGrid::Email.new(email: 'dennomaz@gmail.com')
    
    to = SendGrid::Email.new(email: email)
 
-   subject = 'We have received your feedback. We will get in touch with you soon!'
+   subject = 'Shoppers Haven!'
    content = SendGrid::Content.new(type: 'text/plain', value: 'We have received your feedback. We will get in touch with you soon!')
    mail = SendGrid::Mail.new(from, subject, to, content)
 
