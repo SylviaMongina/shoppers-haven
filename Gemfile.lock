@@ -133,9 +133,9 @@ GEM
     nio4r (2.5.9)
     nokogiri (1.14.3-x86_64-linux)
       racc (~> 1.4)
-    pg (1.4.6)
+    pg (1.5.3)
     public_suffix (5.0.1)
-    puma (5.6.5)
+    puma (6.2.2)
       nio4r (~> 2.0)
     racc (1.6.2)
     rack (2.2.7)
@@ -213,7 +213,7 @@ PLATFORMS
 DEPENDENCIES
   actionmailer
   activejob
-  bcrypt (~> 3.1.7)
+  bcrypt
   bootsnap
   capybara
   debug
@@ -221,8 +221,8 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   jwt
-  pg (= 1.4.6)
-  puma (~> 5.0)
+  pg (~> 1.5, >= 1.5.3)
+  puma (~> 6.2, >= 6.2.2)
   rails (~> 7.0.4, >= 7.0.4.3)
   selenium-webdriver
   sendgrid-ruby
@@ -236,4 +236,4 @@ RUBY VERSION
    ruby 3.2.2p53
 
 BUNDLED WITH
-   2.4.10
+   2.4.12
