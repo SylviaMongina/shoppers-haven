@@ -35,6 +35,7 @@ end
     @search_histories = SearchHistory.find([:id])
     @search_history.destroy
     head :no_content
+
     
   end
 
