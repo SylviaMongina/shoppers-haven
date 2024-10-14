@@ -5,6 +5,7 @@ import { Menu, Transition } from '@headlessui/react'
 import DotLoader from "react-spinners/DotLoader";
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import './search.css'
+import { useLocation } from 'react-router-dom';
 
 
 function classNames(...classes) {
@@ -16,25 +17,31 @@ function SearchPage() {
   const [loading, setLoading] = useState(false)
   const [products, setProducts] = useState([]);
   const [searchItem, setSearchItem] = useState('');
+  const location = useLocation();
 
   useEffect(() => {
-    setLoading(true)
-    fetchProducts();
-  }, [])
+    const searchParams = new URLSearchParams(location.search);
+    const query = searchParams.get('query');
+    if (query) {
+      setSearchItem(query);
+      fetchProducts(query);
+    }
+  }, [location]);
+
 
   const fetchProducts = async (search = '') => {
     setLoading(true);
-    try{
+    try {
       const response = await fetch(`/products${search ? `?search=${search}` : ''}`);
-      if (!response.ok){
+      if (!response.ok) {
         throw new Error('Network response was not okay');
       }
 
       const data = await response.json();
       setProducts(data);
-    }catch (error){
-      console.error('Error getching products:', error);
-    }finally{
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    } finally {
       setLoading(false);
     }
   };
@@ -43,6 +50,8 @@ function SearchPage() {
     e.preventDefault();
     fetchProducts(searchItem);
   };
+
+  
   return (
     <div>
     { 
